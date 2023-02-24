@@ -1,0 +1,25 @@
+<body id="editcate" >
+    <br><br><br><br><br><br><br>
+    <div class="container-fluid login-cont">
+        <div class="sub-container">
+            <div class="inner">
+               <center>   <form action="" method="post">
+                    <h2 class="text-center">Edit Category</h2>
+                    <br>
+                 <input class="form" type="text" name="name" placeholder="enter category name" value="{{category.name}}" required>
+                    <br>               
+                    <input type="submit" value="Save" class=" btn cust-btn  bg-success mt-2">
+                    <input type="hidden" name="id" value="{{category._id}}">
+                    <br>
+                     <div>
+                    {{#if message}}
+                    <div class="alert alert-success" role="alert"> {{message}}</div>
+                    {{else if error}}
+                    <div class="alert alert-danger" role="alert"> {{error}}</div>
+                    {{/if}}
+                </div>
+                </form></center> 
+            </div>
+        </div>
+    </div>
+</body>

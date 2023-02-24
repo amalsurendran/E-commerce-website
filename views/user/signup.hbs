@@ -1,0 +1,82 @@
+<body>
+
+
+	<section class="login_box_area section_gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div>
+
+						<h1 id="loginpage" style="margin-top:200px ;">LensFocus</h1>
+
+
+					</div>
+					<div>
+						{{#if message}}
+						<div class="alert alert-success" role="alert"> {{message}}</div>
+						{{else if error}}
+						<div class="alert alert-danger" role="alert"> {{error}}</div>
+						{{/if}}
+					</div>
+				</div>
+				{{!-- ksd18me060 --}}
+
+				<div class="col-lg-6 ">
+
+					<div class="login_form_inner">
+						<h3>Sign up</h3>
+						<form class="row login_form" action="/verify" method="post" id="contactForm">
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control"
+									pattern="^[A-Za-z]+(([,.] |[ '-])[A-Za-z]+)*([.,'-]?)$" id="name" name="name"
+									placeholder="Username" onfocus="this.placeholder = ''"
+									onblur="this.placeholder = 'Username'" required="">
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+									id="email" name="email" placeholder="Email" onfocus="this.placeholder = ''"
+									onblur="this.placeholder = 'Password'" required="">
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile"
+									 onfocus="this.placeholder = ''"
+									onblur="this.placeholder = 'mobile'" required="">
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="password" class="form-control" id="name" name="password" placeholder="Password"
+									pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$"
+									onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required="">
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="password" class="form-control" id="name" name="conpassword" placeholder="confirm Password"
+									pattern="^.{6,}$" onfocus="this.placeholder = ''"
+									onblur="this.placeholder = 'Password'" required="">
+							</div>
+							<div class="col-md-12 form-group">
+
+							</div>
+							<div class="col-md-12 form-group">
+								<button type="submit" id="submit" value="submit" class="primary-btn"
+									onclick="click">Sign
+									up</button>
+
+
+								<a href="login">Log in</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<!--================End Login Box Area =================-->
+
+	<!-- start footer Area -->
+
+	<!-- End footer Area -->
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>

@@ -1,0 +1,61 @@
+<body>
+
+
+	<section class="login_box_area section_gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div>
+						<h1 id="loginpage">LensFocus</h1>
+					
+
+					</div>
+					<div>
+						{{#if message}}
+						<div class="alert alert-success" role="alert"> {{message}}</div>
+						{{else if error}}
+						<div class="alert alert-danger" role="alert"> {{error}}</div>
+						{{/if}}
+					</div>
+
+				</div>
+				<div class="col-lg-6">
+					<div class="login_form_inner">
+						<h3>Log in to enter</h3>
+						<form class="row login_form" action="/home
+						" method="post" id="contactForm">
+							<div class="col-md-12 form-group">
+								<input type="email" class="form-control" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+									id="name" name="email" placeholder="Email"
+									>
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="password" class="form-control" id="name" name="password" placeholder="Password"
+									pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$"
+									>
+							</div>
+							<div class="col-md-12 form-group">
+								<div class="creat_account">
+									<input type="checkbox" id="f-option2" name="selector">
+									<label for="f-option2">Keep me logged in</label>
+								</div>
+							</div>
+							<div class="col-md-12 form-group">
+								<button type="submit" value="submit" class="primary-btn">Log In</button>
+								<a href="/forget-password">Forgot Password?</a> <Span><a href="/signup">SIGNUP</a></Span>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Login Box Area =================-->
+
+	<!-- start footer Area -->
+
+	<!-- End footer Area -->
+
+
+
+</body>

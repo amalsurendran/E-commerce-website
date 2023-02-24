@@ -1,0 +1,52 @@
+
+
+<body >
+
+	
+	<section class="login_box_area section_gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div>
+						<h1 id="loginpage">LensFocus</h1>
+                </div>
+				<div>
+						{{#if message}}
+						<div class="alert alert-success" role="alert"> {{message}}</div>
+						{{else if error}}
+						<div class="alert alert-danger" role="alert"> {{error}}</div>
+						{{/if}}
+					</div>
+					
+			
+				</div>
+				<div style="margin-top: 100px;" class="col-lg-6 ">
+					<div class="login_form_inner  p-5">
+						<h3>RESEND</h3>
+						<form class="row login_form" action="/send" method="get" id="contactForm" >
+							<div class="col-md-12 form-group">
+								<input type="mobile"  class="form-control" id="name"  name="mobile" placeholder=" Enter mobile"  required="">
+								<input type="text" name="" value="{{email}}" hidden="">
+								
+							</div>
+                        </form>
+							<div class="col-md-12 form-group">
+								<a href="/send/{{email}}/{{mobile}}" type="submit" value="submit" class="primary-btn">RESEND</a>
+								
+							</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Login Box Area =================-->
+
+	<!-- start footer Area -->
+	
+	<!-- End footer Area -->
+
+
+	
+</body>
+

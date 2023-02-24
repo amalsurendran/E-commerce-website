@@ -1,0 +1,45 @@
+<div class="container tm-mt-big tm-mb-big">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+            <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="tm-block-title d-inline-block">Add Banner</h2>
+                    </div>
+                </div>   
+                <center>
+                    <div class="col-xl-6 col-lg-6 col-md-12">
+                        <form action="" class="tm-edit-product-form" method="post" enctype="multipart/form-data">
+                            <div class="form-group mb-3">
+                                <label for="name">Banner Name
+                                </label>
+                                <input id="name" name="name" type="text" value="{{banner.name}}" class="form-control validate" required />
+                            </div>
+                    </div>
+                </center>
+                <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+                    <div class="tm-product-img-dummy mx-auto">
+                        <i class="fas fa-cloud-upload-alt tm-upload-icon"
+                            onclick="document.getElementById('fileInput').click();"></i>
+                    </div>
+                    <div class="custom-file mt-3 mb-3">
+                        <input id="fileInput" type="file" name="image" accept="image/*" style="display:none;" />
+                        <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
+                            onclick="document.getElementById('fileInput').click();" />
+                    </div>
+                     <div >
+                        <img style="width: 22vw;" src="/categoryImages/{{banner.image}}"  alt="..." >
+                    </div>
+                </div>
+                    <input type="hidden" name="id" value="{{banner._id}}">
+                <div class="col-12">
+                    <button type="submit" onmouseover="show" class="btn btn-primary btn-block text-uppercase">Add
+                        Banner Now</button>
+                </div>
+                   
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

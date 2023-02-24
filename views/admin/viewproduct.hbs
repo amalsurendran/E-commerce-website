@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <div class="sub-container thehome">
+        <div class="p-3">
+            <h1 class="thenewarrival">Ordered Products</h1>
+            <div class="theArea">
+                <table class="table" id="list_orderedproducts">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product name</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each order}}
+
+                        {{#each product}}
+                        <tr>
+                            <td>{{name}}</td>
+                            <td>{{quantity}}</td>
+                            <td>₹{{price}}</td>
+                        </tr>
+                        {{/each}}
+
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="pt-5">
+                <h6 class="mb-0"><a href="orders" class="text-body text-decoration-none"><i class="fas fa-long-arrow-alt-left me-2"></i>Back</a></h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#list_orderedproducts').DataTable();
+    });
+</script>

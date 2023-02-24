@@ -1,0 +1,47 @@
+<body>
+	<section class="login_box_area section_gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div>
+						<h1 id="loginpage">LensFocus</h1>
+					</div>
+					<div>
+						{{#if message}}
+						<div class="alert alert-success" role="alert"> {{message}}</div>
+						{{else if error}}
+						<div class="alert alert-danger" role="alert"> {{error}}</div>
+						{{/if}}
+					</div>
+
+
+				</div>
+				<div style="margin-top: 100px;" class="col-lg-6 ">
+					<div class="login_form_inner  p-5">
+						<h3>VERIFY</h3>
+						<form class="row login_form" action="/otp-verification" method="post" id="contactForm">
+							<div class="col-md-12 form-group">
+								<input type="number" for="otp" class="form-control" id="name" name="otp"
+									placeholder=" Enter OTP" required="">
+								<input name="email" hidden="" value="{{email}}">
+							</div>
+							<div class="col-md-12 form-group">
+								<button type="submit" value="submit" class="primary-btn">VERIFY</button>
+							</div>
+						</form>
+						<a href="/send/{{email}}/{{mobile}}" class="primary">Resend OTP</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</section>
+	<!--================End Login Box Area =================-->
+
+	<!-- start footer Area -->
+
+	<!-- End footer Area -->
+
+
+
+</body>

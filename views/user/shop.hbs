@@ -1,0 +1,64 @@
+
+
+<br><br><br><br><br>
+<section class="rounded-3" style="background-color: #ff6c00 ;">
+    <div class="text-center container py-5">
+
+        <h1 class="text-light">
+            <strong>
+                Shop products
+            </strong>
+        </h1>
+       {{#if products }}
+
+        <div class="row">
+            {{#each products}}
+            <div class=" col-lg-4 col-md-12 mb-12">
+                <div style="border-radius: 1em; margin: 10px;" class="card ">
+                    <div class="mask">
+                        <div class="d-flex justify-content-start align-items-end h-100">
+                            <h5><span class="text-danger"></span></h5>
+                        </div>
+                    </div>
+                    <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
+                        data-mdb-ripple-color="light">
+
+                        <a href="/product-view?id={{this._id}}"> <img src="/productImages/{{this.image.[0]}}"
+                                class="w-100" alt="" width="200px" height="210px"></a>
+                        <div class="hover-overlay">
+                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);">
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <a href="" class="text-reset text-decoration-none ">
+                            <h5 class="card-title mb-3 ">{{this.name}}</h5>
+                        </a>
+                        <a href="" class="text-reset text-decoration-none ">
+                            {{!-- <p>{{this.category}}</p> --}}
+                        </a>
+                        <h6 class="mb-3">₹{{this.price}}</h6>
+                        <li class="list-group">Free delivery</li>
+                    </div>
+                    <div class="card-body">
+                        {{#if this.quantity}}
+                        <a class="btn the-userbutton" href="/addtocart?id={{this._id}}">Add to Cart</a>
+                        {{else}}
+                        <a class="text-decoration-none text-danger " href=""><strong>Out of stock</strong></a>
+                        {{/if}}
+                        <a href="/addtowishlist?id={{this._id}}" class="btn the-userbutton">Add to Wishlist</a>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+          
+        </div>
+          {{else}}
+          <img src="/image/123456.webp" alt="">
+          {{/if}}
+        <div class="pt-5">
+            <a href="home" class="text-body text-decoration-none"><h5 class="text-light">Back</h5></a>
+        </div>
+    </div>
+</section>

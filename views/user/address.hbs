@@ -1,0 +1,105 @@
+
+        <br><br><br><br>
+
+<div class="container-xl px-4 mt-4">
+    <!-- Account page navigation-->
+    <nav class="nav nav-borders">
+        <a class="nav-link" href="user-profile" >Profile</a>
+        <a class="nav-link active" href="address"> Add New Address</a>
+        <a class="nav-link" href="password-change" >Password</a>
+        <a class="nav-link" href="order" >My Orders</a>
+        {{!-- <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-edit-notifications-page"  target="__blank">Notifications</a> --}}
+    </nav>
+    <hr class="mt-0 mb-4">
+    <div class="row">
+       <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0 ">
+                <div class="card-header">Profile Picture</div>
+                <div class="card-body text-center">
+                    <!-- Profile picture image-->
+                    <img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                    <p>{{user.name}}</p>
+                    <!-- Profile picture help block-->
+                    {{!-- <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div> --}}
+                    <!-- Profile picture upload button-->
+                    {{!-- <button class="btn btn-primary" type="button">Upload new image</button> --}}
+                </div>
+            </div>
+        </div>
+       
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <div class="card mb-4 p-5">
+                <div class="card-header">Account Details</div>
+                <form method="post" action="/user-profile" >
+                        
+                        <label class="small mb-1" >HOME / OFFICE</label>
+                        <select class="mb-3" name="delivery_point" id="category" >
+                                   
+                                    <option>HOME</option>
+                                    <option>OFFICE</option>
+                                   
+                                </select>
+                        <!-- Form Group (username)-->
+                        <div class="mb-3">
+                            <label class="small mb-1 float-left">Full Name</label>
+                            <input class="form-control" id="inputUsername" type="text"  name="name" placeholder="Enter your fullname" >
+                        </div>
+                        
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (first name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1 float-left"  >Mobile</label>
+                                <input class="form-control"  name="number" id="inputFirstName" type="text" placeholder="Enter your mobile nimber" >
+                            </div>
+                            <!-- Form Group (last name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1 float-left" >State</label>
+                                <input class="form-control" id="inputLastName" type="text" placeholder="Enter your state">
+                            </div>
+                        </div>
+                        <!-- Form Row        -->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (organization name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1 float-left" >Address</label>
+                                <input class="form-control" id="inputOrgName"  name="house" type="text" placeholder="Enter your house  name" >
+                            </div>
+                            <!-- Form Group (location)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1 float-left" >City</label>
+                                <input class="form-control" id="inputLocation"name="city" type="text" placeholder="Enter your city" >
+                            </div>
+                        </div>
+                        <!-- Form Group (email address)-->
+                       
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (phone number)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1 float-left" >Country</label>
+                                <input class="form-control"name="country" id="inputPhone" type="tel" placeholder="Enter your country" >
+                            </div>
+                            <!-- Form Group (birthday)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1 float-left">ZIP</label>
+                                <input class="form-control" id="inputBirthday" type="text" name="pincode" placeholder="Enter your pincode" >
+                            </div>
+                        </div>
+                         {{!-- <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">HOME / OFFICE</label>
+                            <input class="form-control" id="inputEmailAddress" name="delivery_point"  type="text">
+                        </div> --}}
+                         
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary" value="submit" type="submit">Add Address</button>
+                {{!-- <button style="float: left;"><a href="/user-profile">back</a></button>  --}}
+                    </form></center>  
+            </div>
+        </div>
+    </div>
+ 
+</div>
+ 

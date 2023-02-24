@@ -1,0 +1,37 @@
+<br><br><br><br><br><br>
+<section class="related-product-area section_gap_bottom">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-6 text-center">
+					<div class="section-title">
+						<h1>SHOP PRODUCTS </h1>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+							labore et dolore
+							magna aliqua.</p>
+					</div>
+				</div>
+			</div>
+
+			<section>
+    <div class="untree_co-section product-section before-footer-section">
+		    <div class="container">
+                <br><br>
+                {{!-- <h1>Shop according to category</h1> --}}
+                <br><br>
+		      	<div class="row">
+                    {{#each category}}
+		      		<!-- Start Column 1 -->
+					<div class="col-12 col-md-4 col-lg-3 mb-5">
+						<a class="product-item text-decoration-none " href="/viewproducts?categoryid={{this._id}}">
+							<h3 class="product-title">{{this.name}}</h3>
+						</a>
+					</div> 
+					<!-- End Column 1 -->
+                    {{/each}}
+
+		      	</div>
+		    </div>
+		</div>
+</section>
+		</div>
+	</section>

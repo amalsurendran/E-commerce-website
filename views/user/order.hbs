@@ -1,0 +1,148 @@
+<div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="chartjs-size-monitor">
+        <div class="chartjs-size-monitor-expand">
+            <div class=""></div>
+        </div>
+        <div class="chartjs-size-monitor-shrink">
+            <div class=""></div>
+        </div>
+    </div>
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2>Orders</h2>
+
+    </div>
+
+
+
+
+    <div class="table-responsive">
+        <table class="table table-hover" id="list_products">
+            <thead>
+                <tr>
+                    <th scope="col">OrderId</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each orderdata}}
+
+                {{#each product}}
+                <tr>
+                    <td>{{../orderId}}</td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.quantity}}</td>
+                    <td>{{../status}}</td>
+                    <td>
+                        {{!-- {{#if (../status 'processing')}}
+                        <button class="btn" onclick="cancelOrderModall('{{this._id}}','{{../_id}}')" ><span class="fs-sm">Cancel Order</span></button>
+                        {{else}}
+                                        
+
+                        {{/if}} --}}
+                    </td>
+
+                </tr>
+
+                {{/each}}
+
+                {{/each}}
+                               
+            </tbody>
+        </table>
+        
+    <div class="modal fade" id="cancelOrderModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Cancel Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>Do you really want to cancel the order ????</h5>
+                     <input type="hidden" id="OrderedProductId">
+                    <input type="hidden" id="OrderId" >
+                </div>
+                <div class="row sign-btn2">
+                    <div class="col-sm-1 m-2">
+
+                        <button type="button" class="btn btn-secondary" onclick="cancelOrder()">Cancel</button>
+                        <br><br>
+                    </div>
+                    <div class="col-sm-1 m-2">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    
+    </div>
+    </div>
+
+    {{!-- modal --}}
+
+
+
+</div>
+
+<script>
+    function cancelOrderModall(OprId, OrId) {
+        console.log(OprId + "Ordered Product ID")
+        console.log(OrId + "Order ID")
+        document.getElementById("OrderedProductId").value = OprId;
+        document.getElementById("OrderId").value = OrId;
+
+        $('#cancelOrderModal').modal('show');
+
+    }
+
+    async function cancelOrder() {
+        console.log("cancel")
+        const OpId = document.getElementById("OrderedProductId").value;
+        const OId = document.getElementById("OrderId").value;
+
+
+        let cancellOrder = await fetch('/cancelOrder', {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'post',
+            body: JSON.stringify({ OpId: OpId, OId: OId }),
+        })
+         let response = await cancellOrder.json()
+                 if (response == 'success') {
+            $('#cancelOrderModal').modal('hide')
+            Swal.fire({
+                title: 'Success',
+                text: "Address Added Successfully !",
+                icon: 'success',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'OK',
+                timer: 3000
+            }).then((res) => {
+                window.location.href="/home"
+            })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }
+    }
+
+    $(document).ready(function () {
+        $('#list_products').DataTable();
+    });
+
+
+
+</script>
