@@ -65,7 +65,7 @@ const loadhome = async (req, res, next) => {
         }
  
     } catch (error) {
-        throw new Error('somthing wrong')
+        next(error)
         
     }
 }

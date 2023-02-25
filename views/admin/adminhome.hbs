@@ -115,27 +115,57 @@
                                 <tr>
                                     <th scope="col">ORDER NO.</th>
                                     <th scope="col">STATUS</th>
-                                    <th scope="col">OPERATORS</th>
-                                    <th scope="col">LOCATION</th>
-                                    <th scope="col">DISTANCE</th>
+                                    <th scope="col">PAYMENT</th>
+                                    {{!-- <th scope="col">LOCATION</th> --}}
+                                    <th scope="col"> AMOUNT</th>
                                     <th scope="col">START DATE</th>
-                                    <th scope="col">EST DELIVERY DUE</th>
+                                    {{!-- <th scope="col">EST DELIVERY DUE</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
+                                    {{#each orderdata}}
                                 <tr>
-                                    <th scope="row"><b>#122349</b></th>
+                                    
+                                    <th scope="row"><b>#{{orderId}}</b></th>
                                     <td>
+                                         {{#ifeq this.status "processing"}}
+                                        <div class="tm-status-circle pending">
+                                        </div>{{status}}
+                                        {{/ifeq}}
+                                         {{#ifeq this.status "Cancelled"}}
+                                        <div class="tm-status-circle cancelled">
+                                        </div>{{status}}
+                                        {{/ifeq}}
+                                          {{#ifeq this.status "Delivered"}}
                                         <div class="tm-status-circle moving">
-                                        </div>Moving
+                                        </div>{{status}}
+                                        {{/ifeq}}
+                                         {{#ifeq this.status "Returned"}}
+                                        <div class="tm-status-circle cancelled">
+                                        </div>{{status}}
+                                        {{/ifeq}}
+                                         {{#ifeq this.status "Out for Delivery"}}
+                                        <div class="tm-status-circle pending">
+                                        </div>{{status}}
+                                        {{/ifeq}}
                                     </td>
-                                    <td><b>Oliver Trag</b></td>
-                                    <td><b>London, UK</b></td>
-                                    <td><b>485 km</b></td>
-                                    <td>16:00, 12 NOV 2018</td>
-                                    <td>08:00, 18 NOV 2018</td>
+                                                         <td>
+                                    {{#ifeq this.payment_method 1}}
+                                    <p class="" >COD</p>
+                                    {{/ifeq}}
+
+                                    {{#ifeq this.payment_method 2}}
+                                    <p class="" >RAZORPAY</p>
+                                    {{/ifeq}}
+                                </td>
+                                    {{!-- <td><b>{{name}}</b></td> --}}
+                                    <td><b>{{subtotal}}</b></td>
+                                    <td>{{date}}</td>
+                                    {{!-- <td>08:00, 18 NOV 2018</td> --}}
+                                    
                                 </tr>
-                                <tr>
+                                {{/each}}
+                                {{!-- <tr>
                                     <th scope="row"><b>#122348</b></th>
                                     <td>
                                         <div class="tm-status-circle pending">
@@ -146,8 +176,8 @@
                                     <td><b>360 km</b></td>
                                     <td>11:00, 10 NOV 2018</td>
                                     <td>04:00, 14 NOV 2018</td>
-                                </tr>
-                                <tr>
+                                </tr> --}}
+                                {{!-- <tr>
                                     <th scope="row"><b>#122347</b></th>
                                     <td>
                                         <div class="tm-status-circle cancelled">
@@ -158,8 +188,8 @@
                                     <td><b>340 km</b></td>
                                     <td>12:00, 22 NOV 2018</td>
                                     <td>06:00, 28 NOV 2018</td>
-                                </tr>
-                                <tr>
+                                </tr> --}}
+                                {{!-- <tr>
                                     <th scope="row"><b>#122346</b></th>
                                     <td>
                                         <div class="tm-status-circle moving">
@@ -170,8 +200,8 @@
                                     <td><b>218 km</b></td>
                                     <td>15:00, 10 NOV 2018</td>
                                     <td>09:00, 14 NOV 2018</td>
-                                </tr>
-                                <tr>
+                                </tr> --}}
+                                {{!-- <tr>
                                     <th scope="row"><b>#122345</b></th>
                                     <td>
                                         <div class="tm-status-circle pending">
@@ -182,8 +212,8 @@
                                     <td><b>280 km</b></td>
                                     <td>15:00, 11 NOV 2018</td>
                                     <td>09:00, 17 NOV 2018</td>
-                                </tr>
-                                <tr>
+                                </tr> --}}
+                                {{!-- <tr>
                                     <th scope="row"><b>#122344</b></th>
                                     <td>
                                         <div class="tm-status-circle pending">
@@ -194,8 +224,8 @@
                                     <td><b>218 km</b></td>
                                     <td>18:00, 12 OCT 2018</td>
                                     <td>06:00, 18 OCT 2018</td>
-                                </tr>
-                                <tr>
+                                </tr> --}}
+                                {{!-- <tr>
                                     <th scope="row"><b>#122343</b></th>
                                     <td>
                                         <div class="tm-status-circle moving">
@@ -254,7 +284,7 @@
                                     <td><b>150 km</b></td>
                                     <td>15:00, 12 OCT 2018</td>
                                     <td>09:20, 26 OCT 2018</td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                         </table>
                     </div>

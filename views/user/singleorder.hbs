@@ -2,7 +2,7 @@
 <section class=" gradient-custom">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-lg-10 col-xl-8">
+      <div class="col-lg-10 col-xl-12">
         {{#each order}}
         <div class="card" style="border-radius: 10px;">
 
@@ -64,17 +64,17 @@
 
             <div class="d-flex justify-content-between mb-5">
               {{#ifeq this.status "processing"}}
-              <a href="/cancelreturnorder?id={{this._id}}" class="text-danger text-decoration-none"
+              <a href="/cancel-order?id={{this._id}}" class="text-danger text-decoration-none"
                 data-bs-toggle="modal" data-bs-target="#exampleModal{{@index}}"><strong>Cancel Order</strong></a>
               {{/ifeq}}
 
               {{#ifeq this.status "Shipped"}}
-              <a href="/cancelreturnorder?id={{this._id}}" class="text-danger text-decoration-none"
+              <a href="/cancel-order?id={{this._id}}" class="text-danger text-decoration-none"
                 data-bs-toggle="modal" data-bs-target="#exampleModal{{@index}}"><strong>Cancel Order</strong></a>
               {{/ifeq}}
 
               {{#ifeq this.status "Delivered"}}
-              <a href="/cancelreturnorder?id={{this._id}}" class="text-primary text-decoration-none"
+              <a href="cancel-order?id={{this._id}}" class="text-primary text-decoration-none"
                 data-bs-toggle="modal" data-bs-target="#exampleModal{{@index}}"><strong>Return</strong></a>
               {{/ifeq}}
 
@@ -96,7 +96,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a href="/cancelreturnorder?id={{this._id}}"><button type="button" class="btn btn-danger">Cancel
+                <a href="/cancel-order?id={{this._id}}"><button type="button" class="btn btn-danger">Cancel
                     Order</button></a>
               </div>
             </div>
@@ -117,7 +117,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a href="/cancelreturnorder?id={{this._id}}"><button type="button" class="btn btn-danger">Cancel
+                <a href="/cancel-order?id={{this._id}}"><button type="button" class="btn btn-danger">Cancel
                     Order</button></a>
               </div>
             </div>
@@ -138,7 +138,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a href="/cancelreturnorder?id={{this._id}}"><button type="button" class="btn btn-danger">Return
+                <a href="/cancel-order?id={{this._id}}"><button type="button" class="btn btn-danger">Return
                     Order</button></a>
               </div>
             </div>

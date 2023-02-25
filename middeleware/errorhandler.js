@@ -8,4 +8,4 @@ const notFound = (req, res, next) => {
     res.render("user/404");
   };
   
-  module.exports = { notFound, errorHandler };
+  module.exports = { notFound,errorHandler};

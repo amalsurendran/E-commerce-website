@@ -23,8 +23,9 @@ const loadLogin = async (req, res, next) => {
 }
 const loadHome = async (req, res, next) => {
     try {
+        const orderdata = await Order.find({}).sort({_id:-1}).lean()
         res.render('adminhome', {
-            adminlog: true
+            adminlog: true,order:orderdata
         })
 
     } catch (error) {
@@ -33,6 +34,7 @@ const loadHome = async (req, res, next) => {
 }
 const AdminverifyLogin = async (req, res, next) => {
     try {
+        const orderdata = await Order.find({}).sort({_id:-1}).lean()
         const email = req.body.email;
         const password = req.body.password;
         const checkAdmin = await admin.findOne({
@@ -45,7 +47,7 @@ const AdminverifyLogin = async (req, res, next) => {
             if (passwordMatch) {
                 req.session.admin_id = checkAdmin._id;
                 res.render('adminhome', {
-                    adminlog: true
+                    adminlog: true,orderdata,checkAdmin
                 })
             } else {
                 res.render('adminlog', {

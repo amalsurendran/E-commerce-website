@@ -1,52 +1,85 @@
- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
-    <br><br><br><br>
-    <div class="container-fluid">
-        <div class="sub-container thehome">
-            <div class="p-3">
-              <center>  <h1 class="thenewarrival">Product Management</h1> </center>
-                <div class="p-3">
-                    <form class="d-flex " style="margin-left:6rem ;">
-                        <a href="/admin/add-product" class="btn btn-success">Add product</a>
-                    </form>
-                </div>
-                <div class="theArea">
-               <center>     <table id="list_users" class="table " style="width: 10vw;">
-                        <thead>
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Description</th>      
-                                <th scope="col">Action</th>
-                                <th scope="col">Stock</th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                            {{#each product}}
-                            <tr>
-                                <td>{{this.name}}</td>
-                                <td><img src="/productImages/{{this.image.[0]}}"  alt="..." ></td>
-                                <td>₹{{price}}</td>
-                                <td>{{products.0.name}}</td>
-                                <td><p>{{this.description}}</p></td>
-                                <td><a href="/admin/edit-product?id={{this._id}}" style="background-color:#f5a623 ; "  class="btn btn-info w-100">UPDATE</a> &nbsp;
-                                    <a href="/admin/delete-product?id={{this._id}}"  style="background-image: linear-gradient(rgba(255, 0, 0, 0.819), rgb(255, 0, 0))" class="btn btn-danger w-100 " onclick="return confirm('Are you sure you want to delete?')">Delete</a>
-                                </td>
-                                <td><p>{{this.quantity}}</p></td>
-                            </tr>
-                            {{/each}}
-                           
-                        </tbody>
-                    </table></center>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+
+
+<section class="h-100 h-custom">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12">
+                
+                <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <div class="col-lg-12">
+                                <div class="p-5">
+
+
+                                    <div class="p-3">
+                                        <center>
+                                            <h1>Product Management</h1>
+                                        </center>
+                                        <div class="p-3">
+                                            <form class="d-flex ">
+                                                <a href="/admin/add-product" style="border-radius: 5px;" class="btn btn-success">Add product</a>
+                                            </form>
+                                        </div>
+                                        <div class="theArea">
+                                            <center>
+                                                <table id="list_users" class="table " >
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Name</th>
+                                                            <th scope="col">Image</th>
+                                                            <th scope="col">Price</th>
+                                                            <th scope="col">Category</th>
+                                                            <th scope="col">Description</th>
+                                                            <th scope="col">Action</th>
+                                                            <th scope="col">Stock</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        {{#each product}}
+                                                        <tr>
+                                                            <td>{{this.name}}</td>
+                                                            <td><img class="img-fluid" src="/productImages/{{this.image.[0]}}" alt="...">
+                                                            </td>
+                                                            <td>₹{{price}}</td>
+                                                            <td>{{products.0.name}}</td>
+                                                            <td>
+                                                                <p>{{this.description}}</p>
+                                                            </td>
+                                                            <td><a  style="border-radius: 5px; background-color:#f5a623 "href="/admin/edit-product?id={{this._id}}"
+                                                                   
+                                                                    class="btn btn-info w-100">UPDATE</a> &nbsp;
+                                                                <a  style="border-radius: 5px;" href="/admin/delete-product?id={{this._id}}"
+                                                                    style="background-image: linear-gradient(rgba(255, 0, 0, 0.819), rgb(255, 0, 0))"
+                                                                    class="btn btn-danger w-100 "
+                                                                    onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                                                            </td>
+                                                            <td>
+                                                                <p>{{this.quantity}}</p>
+                                                            </td>
+                                                        </tr>
+                                                        {{/each}}
+
+                                                    </tbody>
+                                                </table>
+                                            </center>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
+</section>
 <script>
-$(document).ready( function () {
-    $('#list_users').DataTable();
-});
+    $(document).ready(function () {
+        $('#list_users').DataTable();
+    });
 </script>
