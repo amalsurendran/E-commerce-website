@@ -4,7 +4,7 @@ const Db =  () =>{
     const mongoose = require('mongoose');
     
     mongoose.set('strictQuery', false);
-    mongoose.connect(process.env.dataurl);
+    mongoose.connect("mongodb+srv://amalsurendran270:mongodb1234@lensfocus.4fugcsq.mongodb.net/?retryWrites=true&w=majority");
     
 }
 const bcrypt = require('bcrypt')
