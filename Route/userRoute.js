@@ -9,7 +9,7 @@ const session = require('express-session');
 const config = require('../config/config')
 const auth = require('../middeleware/Auth');
 const Razorpay=require('razorpay')
-var instance = new Razorpay({ key_id: config.key_id, key_secret: config. key_secret})
+var instance = new Razorpay({ key_id:"rzp_test_LPJeP3o1ny1FXv", key_secret:"WwpA2ZJrjWlW0NnH9H1SIPCl"})
 
 
 
@@ -98,7 +98,7 @@ user_route.post("/api/payment/verify",(req,res)=>{
     let body=req.body.response.razorpay_order_id + "|" + req.body.response.razorpay_payment_id;
    
      var crypto = require("crypto");
-     var expectedSignature = crypto.createHmac('sha256',config.key_secret)
+     var expectedSignature = crypto.createHmac('sha256',"WwpA2ZJrjWlW0NnH9H1SIPCl")
                                      .update(body.toString())
                                      .digest('hex');
                                      console.log("sig received " ,req.body.response.razorpay_signature);
