@@ -20,7 +20,7 @@ user_route.use(express.urlencoded({
 
 user_route.use(session({
     saveUninitialized: false,
-    secret: (config.sessionSecret),
+    secret: 'mysitesessionsecret',
     resave: false,
 
 }));
