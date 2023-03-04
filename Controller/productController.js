@@ -108,7 +108,7 @@ const updateProduct = async (req, res, next) => {
                     quantity: req.body.quantity
                 },
                 $push: {
-                    image:  images ?? [] 
+                    image:  images ?? [],
                   },
         
             });
