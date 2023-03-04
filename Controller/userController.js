@@ -1,4 +1,4 @@
-const user = require('../models/userModel');
+const user = require('../Models/userModel');
 const bcrypt = require('bcrypt');
 const swal = require('sweetalert')
 const config = require('../config/config');
