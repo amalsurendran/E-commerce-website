@@ -10,7 +10,8 @@ const {banner} =require('../middeleware/multer')
 
 admin_route.use(session({
     saveUninitialized: false,
-    secret: (config.sessionSecret),
+    secret:"mysitesessionsecret",
+    //secret: (config.sessionSecret),
     resave: false,
 
 }));
