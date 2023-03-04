@@ -393,48 +393,48 @@ const deleteimage = async (req, res) => {
     }
 }
 
-const salesReport = async (req, res, next) => {
+// const salesReport = async (req, res, next) => {
     
-    try {
-        console.log("amal");
-      let { fromdate, todate } = req?.query ?? {};
-      let salesReport;
-      let total = 0;
+//     try {
+//         console.log("amal");
+//       let { fromdate, todate } = req?.query ?? {};
+//       let salesReport;
+//       let total = 0;
       
-      if (fromdate && todate) {
-        fromdate = new Date(fromdate);
-        todate = new Date(todate);
+//       if (fromdate && todate) {
+//         fromdate = new Date(fromdate);
+//         todate = new Date(todate);
   
-        if (req?.query?.fromdate == req?.query?.todate && todate && fromdate)
-          todate.setDate(todate.getDate() + 1);
+//         if (req?.query?.fromdate == req?.query?.todate && todate && fromdate)
+//           todate.setDate(todate.getDate() + 1);
   
-        salesReport = await Order.find({
-          date: { $gte: fromdate, $lt: todate },
-        }).lean();
-        console.log(salesReport);
-        salesReport.forEach((item) => {
-          item.date = moment(item.date).format("DD-MM-YYYY");
-          total = total + item.total_amount;
-        });
-      } else {
-        salesReport = await Order.find({}).limit(10).lean();
-        salesReport.forEach((item) => {
-          item.date = moment(item.date).format("DD-MM-YYYY");
-          total = total + item.total_amount;
-        });
-      }
-     console.log(salesReport,total,req.query.fromdate,req.query.todate,'426---')
+//         salesReport = await Order.find({
+//           date: { $gte: fromdate, $lt: todate },
+//         }).lean();
+//         console.log(salesReport);
+//         salesReport.forEach((item) => {
+//           item.date = moment(item.date).format("DD-MM-YYYY");
+//           total = total + item.total_amount;
+//         });
+//       } else {
+//         salesReport = await Order.find({}).limit(10).lean();
+//         salesReport.forEach((item) => {
+//           item.date = moment(item.date).format("DD-MM-YYYY");
+//           total = total + item.total_amount;
+//         });
+//       }
+//      console.log(salesReport,total,req.query.fromdate,req.query.todate,'426---')
      
-      res.render("sales", {
-        salesReport:salesReport,
-        total: total,
-        fromDate: req.query.fromdate,
-        toDate: req.query.todate,
-      });
-    } catch (error) {
-      console.log(error);
-  }
-  };
+//       res.render("sales", {
+//         salesReport:salesReport,
+//         total: total,
+//         fromDate: req.query.fromdate,
+//         toDate: req.query.todate,
+//       });
+//     } catch (error) {
+//       console.log(error);
+//   }
+//   };
 
 
 
@@ -454,6 +454,6 @@ module.exports = {
     addCoupon,
     insertcoupon,
     deleteimage,
-    salesReport
+    // salesReport
 
 }
