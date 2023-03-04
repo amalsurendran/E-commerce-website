@@ -89,9 +89,9 @@ const productinsert = async (req, res, next) => {
 
 const updateProduct = async (req, res, next) => {
     try {
-        // const images = req.files.map((file) => {
-        //     return file.filename
-        // })
+        const images = req.files.map((file) => {
+            return file.filename
+        })
         
         const id = req.body.id
         if (images) {
@@ -108,7 +108,7 @@ const updateProduct = async (req, res, next) => {
                     quantity: req.body.quantity
                 },
                 $push: {
-                    image:{ $each: req.body.images ?? [] },
+                    image:  images ? images :[],
                   },
         
             });
