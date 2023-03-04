@@ -9,11 +9,10 @@ const Order = require('../Models/orderModel')
 const product = require('../Models/productModel');
 const razorpay = require('razorpay')
 const moment = require('moment')
+const Coupon = require('../Models/couponModel')
 const loadCart = async (req, res) => {
 
     try {
-
-
         const cartData = await user.aggregate([{
                 $match: {
                     _id: ObjectId(req.session.user_id)
@@ -57,7 +56,7 @@ const loadCart = async (req, res) => {
 
 
         res.render('cart', {
-            logged: 1,
+            loggedd: 1,
             cartProducts,
             subtotal,
             length
@@ -114,7 +113,7 @@ const loadcart = async (req, res) => {
 }
 
 
-
+let total
 const checkOut = async (req, res) => {
 
     try {
@@ -145,6 +144,7 @@ const checkOut = async (req, res) => {
             },
         ]);
         let subtotal = 0;
+        
         const cartProducts = cartData[0].Cartproducts;
         cartProducts.map((cartProduct, i) => {
             cartProduct.quantity = req.body.quantity[i];
@@ -154,10 +154,10 @@ const checkOut = async (req, res) => {
             productDetails: cartData[0].Cartproducts,
             subtotal: subtotal,
             address: address[0].Address,
-            logged: 1
+            loggedd: 1,total:subtotal,offer:0
         });
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
     }
 
 }
@@ -176,11 +176,14 @@ const checkoutAddress = async (req, res) => {
         console.log(error);
     }
 }
+let couponCode
+let couponamount
 
 
 const placeOrder = async (req, res) => {
-    try {
 
+    try {
+                
         const {
             productid,
             productname,
@@ -193,8 +196,8 @@ const placeOrder = async (req, res) => {
         const result = Math.random().toString(36).substring(2, 7);
         const id = Math.floor(100000 + Math.random() * 900000);
         const orderId = result + id;
-        const datetime = moment();
-        const date = datetime.format('dddd,MMMM Do YYYY')
+        total = subtotal;
+        const date = new Date()
         const lensproduct = productid.map((item, i) => ({
             id: productid[i],
             name: productname[i],
@@ -202,6 +205,19 @@ const placeOrder = async (req, res) => {
             quantity: quantity[i]
 
         }));
+
+        if(req.body.coupon){
+            
+            couponCode = req.body.coupon;
+            const applied = await Coupon.findOne({code:req.body.coupon})
+            couponamount = applied.percentage
+            if(couponamount){
+                const amount =(subtotal*couponamount)/100
+                total = subtotal - amount
+            }else{
+                total= subtotal
+            }
+        }
         let data = {
             userId: ObjectId(req.session.user_id),
             orderId: orderId,
@@ -210,10 +226,10 @@ const placeOrder = async (req, res) => {
             product: lensproduct,
             status: "processing",
             payment_method: String(payment),
-            subtotal: subtotal
+            subtotal:total 
         };
-
-
+         console.log();
+            
         const orderPlacement = await Order.insertMany(data);
         const clearCart = await user.updateOne({
             _id: req.session.user_id
@@ -232,14 +248,13 @@ const placeOrder = async (req, res) => {
             })
         })
 
-        if (orderPlacement && clearCart){
-            req.session.page='fghnjm'
+        if (orderPlacement && clearCart) {
+            req.session.page = 'fghnjm'
             res.json({
                 res: "success",
                 data: data
             })
-        }
-        else {
+        } else {
             const handlePlacementissue = await Order.deleteMany({
                 orderId: orderId,
             });
@@ -261,5 +276,5 @@ module.exports = {
     loadcart,
     checkoutAddress,
     placeOrder,
-   
+
 }

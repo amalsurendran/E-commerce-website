@@ -1,0 +1,43 @@
+
+<section class="h-100 h-custom">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12">
+                
+                <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <div class="col-lg-12">
+                                <div class="p-1"><div class="container-fluid">
+        <div class="sub-container thehome">
+            <div class="p-3">
+                <h1 class="thenewarrival">Coupon Management</h1>
+
+    <div class="row" id="but"><a href="/admin/add-coupon" class="  btn-sm btn-success  " style="width:100px;">Add Coupon</a></div>
+
+                <div class="theArea">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Code</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Off percentage</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each coupon}}
+                            <tr>
+                                <td>{{this.code}}</td>
+                                <td>{{this.date}}</td>
+                                <td>{{this.percentage}}</td>
+                                <td><strong>{{status}}</strong></td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</div>
+                                </div></div></div></div></div></div></div></div></section>

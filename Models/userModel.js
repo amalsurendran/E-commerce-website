@@ -42,7 +42,15 @@ const userSchema = new mongoose.Schema({
     cart:[{
         productId:{type:ObjectId},
         _id:false
-    }]
+    }],
+    wishlist: [{
+        productId: { type: ObjectId }
+
+    }],
+    wallet: {
+        type: Number,
+        default:0
+    },
 
 
 });

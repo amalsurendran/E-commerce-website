@@ -38,35 +38,40 @@ const otpsending = async function sendotp(mobile) {
 
     } catch (error) {
         console.log(error);
-        
-       
+
+
     }
 
 }
 const loadhome = async (req, res, next) => {
+    
     try {
         const bannerData = await banner.find({});
         const categoryData = await Category.find({})
-        
+
         const productData = await product.find({
-            soft_delete:false
+            soft_delete: false
         });
 
         if (req.session.user_id) {
             res.render('home', {
-                product: productData,category:categoryData,
-                logged:1,banner:bannerData
+                product: productData,
+                category: categoryData,
+                logged: 1,
+                banner: bannerData
             })
         } else {
             res.render('home', {
                 login: 1,
-                product: productData,banner:bannerData,category:categoryData,
+                product: productData,
+                banner: bannerData,
+                category: categoryData,
             })
         }
- 
+
     } catch (error) {
         next(error)
-        
+
     }
 }
 const loginLoad = async (req, res, next) => {
@@ -143,22 +148,27 @@ const insertUser = async (req, res, next) => {
                 error: " Email or mobile already taken"
             })
         }
-       
+
     } catch (error) {
         next(error)
     }
 }
 const loadverify = async (req, res, next) => {
+    
     try {
+    
         res.render('verify', {
             logged: true
         })
+        
     } catch (error) {
         console.log(error);
     }
 }
 const otpverify = async (req, res, next) => {
+   
     try {
+       
         const checkUser = await user.findOne({
             email: req.body.email
         })
@@ -190,7 +200,7 @@ const otpverify = async (req, res, next) => {
 const verifyLogin = async (req, res, next) => {
 
     try {
-
+        
         const productData = await product.find({})
         const email = req.body.email;
         const password = req.body.password;
@@ -260,51 +270,54 @@ const loadresend = async (req, res, next) => {
     }
 
 }
-const resendotp = async (req, res, next) => {
-    try {
-        const {
-            email,
-            mobile
-        } = req.params
+const
+    resendotp = async (req, res, next) => {
+        try {
+            const {
+                email,
+                mobile
+            } = req.params
+           
+           
+            const OTP = generateOTP()
+            client.messages.create({
+                    body: OTP,
+                    to: mobile ,
+                    from: '+16018846310'
+                }).then(message => console.log(message))
+                .catch(error => console.log(error))
+            const updatedinfo = await user.updateOne({
+                email: email 
+            }, {
+                $set: {
 
-
-console.log(email);
-        const OTP = generateOTP()
-        client.messages.create({
-                body: OTP,
-                to: mobile ?? req.body.mobile,
-                from: '+16018846310'
-            }).then(message => console.log(message))
-            .catch(error => console.log(error))
-        const updatedinfo = await user.updateOne({
-            email: email    
-        }, {
-            $set: {
-
-                token: OTP
-            }
-        });
-        updatedinfo ? res.render('verify', {
-            login: false,
-            message: "otp resend please check your phone",
-            email: email,
-            mobile: mobile
-        }) : res.render('verify', {
-            login: false,
-            message: "Something went wrong please try again",
-            email: email,
-            mobile: mobile
-        })
-    } catch (error) {
-        console.log(error);
-        res.render('verify', {
-            login: false,
-            message: "Can't sent OTP",
-            email: email,
-            mobile: mobile
-        })
+                    token: OTP
+                }
+            });
+            console.log(updatedinfo);
+            updatedinfo ? res.render('verify', {
+                login: false,
+                message: "otp resend please check your phone",
+                email: email,
+                mobile: mobile,
+                
+            }) : res.render('verify', {
+                login: false,
+                message: "Something went wrong please try again",
+                email: email,
+                mobile: mobile,
+                
+            })
+        } catch (error) {
+            console.log(error);
+            res.render('verify', {
+                login: false,
+                message: "Can't sent OTP",
+                email: email,
+                mobile: mobile
+            })
+        }
     }
-}
 const loadSend = async (req, res, next) => {
 
     try {
@@ -483,22 +496,158 @@ const deleteAddress = async (req, res) => {
     }
 }
 
-const loadforgetpassword = async(req,res)=>{
+const loadforgetpassword = async (req, res) => {
     try {
 
-        res.render('forgetpassword',{
-            })
+        res.render('forgetpassword')
     } catch (error) {
         console.log(error);
     }
 }
 
-const load404 =async(req,res)=>{
+const load404 = async (req, res) => {
     try {
-       res.render('404') 
+        res.render('404')
     } catch (error) {
         console.log(error);
     }
+}
+
+const loadReset =async(req,res)=>{
+    try {
+       res.render('resetpassword') 
+    } catch (error) {
+        
+    }
+}
+ const forget = async (req, res, next) => {
+    try {
+       
+
+        const mob = req.body.mobile
+        console.log(mob);
+        const userdata = await user.findOne({
+            mobile: mob
+        })
+        console.log(userdata,"userotp");
+        const OTP = generateOTP()
+        client.messages.create({
+                body: OTP,
+                to: req.body.mobile,
+                from: '+16018846310'
+            }).then(message => console.log(message))
+            .catch(error => console.log(error))
+        const updatedinfo = await user.updateOne({
+            email:userdata.email
+        }, {
+            $set: {
+
+                token: OTP
+            }
+        });
+        console.log(OTP,"amal");
+        console.log(updatedinfo);
+        updatedinfo ? res.render('forgetVerify', {
+            login: false,
+            message: "otp resend please check your phone",
+            
+            mobile: mob,
+            email: userdata.email
+        }) : res.render('forgetVerify', {
+            login: false,
+            message: "Something went wrong please try again",
+           
+            mobile: mob,
+            email: userdata.email
+        })
+    } catch (error) {
+        console.log(error);
+        res.render('forgetVerify', {
+            login: false,
+            message: "Can't sent OTP",
+            email: email,
+            mobile: mobile
+        })
+    }
+}
+
+const loadFogetverify = async(req,res)=>{
+    try {
+        res.render('forgetVerify')
+    } catch (error) {
+        
+    }
+}
+
+const forgetotp = async (req, res, next) => {
+   
+    try {
+       
+        const checkUser = await user.findOne({
+            email: req.body.email
+        })
+        
+        const enterotp = await req.body.otp;
+        console.log(req.body.otp);
+        console.log(checkUser);
+
+        if (enterotp == checkUser.token) {
+            const updatedinfo = await user.updateOne({
+                email: req.body.email
+            }, {
+                $set: {
+                    is_verified: 1
+                }
+            });
+            res.render('resetpassword', { checkUser,
+                login: false
+            });
+
+        } else {
+            res.render('forgetVerify', {
+                login: false,
+                error: "invalid otp please"
+            })
+        }
+    } catch (error) {
+
+        console.log(error);
+    }
+}
+
+const  resetPassword = async (req, res) => {
+
+    try {
+        const password = req.body.password;
+        const conpassword = req.body.conpassword;
+        const secure_Password = await config.securepassword(password);
+            console.log(req.body.email,'email');
+        if (password === conpassword) {
+            const updatedData = await user.findOneAndUpdate({ email:req.body.email }, { $set:{ password:secure_Password} });
+            res.redirect('/login');
+        } else {
+            res.render('resetpassword', { loggedout: 1, message: "password doesn't match" })
+        }
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+const searchedData = async (req, res) => {
+    try {
+        const data = await product.find({ name: { $regex: req.body.text } });
+        const length = data.length
+        if (req.session.user_id) {
+            res.render('searched', { products: data, logged: 1, length });
+        } else {
+            res.render('searched', { products: data, login: 1, length });
+        }
+    } catch (error) {
+        console.log(error);
+    }
+
+
 }
 
 
@@ -526,7 +675,14 @@ module.exports = {
     addAddress,
     deleteAddress,
     loadforgetpassword,
-    load404
+    load404,
+    loadReset,
+    forget,
+    loadFogetverify,
+    forgetotp,
+    resetPassword,
+    searchedData
+
 
 
 

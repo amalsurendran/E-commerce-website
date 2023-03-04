@@ -23,6 +23,7 @@ const productController = require('../Controller/productController')
 const adminController = require('../Controller/adminController');
 const bannerController =require('../Controller/bannerController')
 const orderController = require('../Controller/orderController')
+
 admin_route.get('/', auth.isLogoutAdmin, adminController.loadLogin)
 admin_route.get('/admin', auth.isLogoutAdmin, adminController.loadLogin)
 admin_route.get('/admin-home',auth.isLoginAdmin, adminController.loadHome)
@@ -30,31 +31,38 @@ admin_route.post('/', adminController.AdminverifyLogin)
 admin_route.get('/signup', auth.isLogoutAdmin, adminController.loadsignup)
 admin_route.post('/signup', adminController.signupAdmin)
 
-admin_route.get('/category', categoryController.loadCategory)
-admin_route.get('/add-category', categoryController.loadAddcategory)
+admin_route.get('/category',auth.isLoginAdmin, categoryController.loadCategory)
+admin_route.get('/add-category',auth.isLoginAdmin, categoryController.loadAddcategory)
 admin_route.post('/add-category',categoryController.insertCategory)
-admin_route.get('/edit-category',categoryController.editCategory);
+admin_route.get('/edit-category',auth.isLoginAdmin,categoryController.editCategory);
 admin_route.post('/edit-category', categoryController.updateCategory);
-admin_route.get('/delete-category', categoryController.deleteCategory);
+admin_route.get('/delete-category',auth.isLoginAdmin, categoryController.deleteCategory);
 
-admin_route.get('/product', productController.loadProduct)
-admin_route.get('/add-product', productController.productAdd)
+admin_route.get('/product',auth.isLoginAdmin, productController.loadProduct)
+admin_route.get('/add-product',auth.isLoginAdmin, productController.productAdd)
 admin_route.post('/add-product', upload.array('image',4), productController.productinsert)
-admin_route.post('/edit-product', upload.single('image'), productController.updateProduct)
-admin_route.get('/edit-product', productController.loadEditproduct)
-admin_route.get('/delete-product', productController.deleteProduct)
+admin_route.post('/edit-product', upload.array('image',4), productController.updateProduct)
+admin_route.get('/edit-product',auth.isLoginAdmin, productController.loadEditproduct)
+admin_route.get('/delete-product', auth.isLoginAdmin,productController.deleteProduct)
 
-admin_route.get('/users', adminController.loaduser);
+admin_route.get('/users',auth.isLoginAdmin, adminController.loaduser);
 admin_route.get('/admin-logout', auth.isLoginAdmin, adminController.loadLogout)
-admin_route.get('/block-user', adminController.blockUser);
-admin_route.get('/unblock-user', adminController.unBlockUser);
-admin_route.get('/orders',adminController.loadOrder)
+admin_route.get('/block-user',auth.isLoginAdmin, adminController.blockUser);
+admin_route.get('/unblock-user',auth.isLoginAdmin, adminController.unBlockUser);
+admin_route.get('/orders',auth.isLoginAdmin,adminController.loadOrder)
 
-admin_route.get('/banner',bannerController.loadBanner)
-admin_route.get('/add-banner',bannerController.loadaddBanner)
+admin_route.get('/banner',auth.isLoginAdmin,bannerController.loadBanner)
+admin_route.get('/add-banner',auth.isLoginAdmin,bannerController.loadaddBanner)
 admin_route.post('/add-banner',banner.single('image'),bannerController.insertBanner);
-admin_route.get('/edit-banner',bannerController.editBanner)
-admin_route.get('/view-product',orderController.loadviewproduct)
-admin_route.get('/change-status',orderController.changestatus)
+admin_route.get('/edit-banner',auth.isLoginAdmin,bannerController.editBanner)
+admin_route.get('/view-product',auth.isLoginAdmin,orderController.loadviewproduct)
+admin_route.get('/change-status',auth.isLoginAdmin,orderController.changestatus)
+admin_route.get('/dash-bord',auth.isLoginAdmin,adminController.dashboardData)
+admin_route.get('/coupon',auth.isLoginAdmin,adminController.loadcoupons)
+admin_route.get('/add-coupon',auth.isLoginAdmin,adminController.addCoupon)
+admin_route.post('/add-coupon',adminController.insertcoupon)
+admin_route.delete('/removeimage/:img/:id',adminController.deleteimage)
+admin_route.get('/sales-report',orderController.loadSales)
+admin_route.post('/sales-report',adminController.salesReport)
 
 module.exports = admin_route;

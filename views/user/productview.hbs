@@ -14,7 +14,7 @@
                             <div class="text-center col-12 zoom-image"
                                 data-image="/productImages/{{product.image.[0]}}">
                                 <img class="col-12" id="main_product_image" src="/productImages/{{product.image.[0]}}"
-                                    width="400" style="background-color:#f1ede9;border-radius:20px;" />
+                                    width="400" style="background-color:#ffffff;border-radius:20px;" />
                             </div>
 
                             <div class="thumbnail_images container ">
@@ -59,8 +59,10 @@
                             <p class="about">
                                 {{product.description}}
                             </p>
-                            <div> <button class="btn btn-outline-dark">Buy
-                                    Now</button> <a href="addtocart?id={{product._id}}"> Add to Cart</a></div>
+                            <div>
+                                 {{!-- <button class="btn btn-outline-dark">Buy
+                                    Now</button>  --}}
+                                    <a href="addtocart?id={{product._id}}"> Add to Cart</a></div>
                             {{!-- <form action="/user-home/addtoCart" method="post">
                                 <button type="submit" class="btn btn-outline-dark bg-dark text-light w-50 mb-5 p-3"
                                     style="width: 100%; margin-top: 10vw; border-radius:50px;">Add to cart</button>

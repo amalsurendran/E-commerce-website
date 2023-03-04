@@ -1,0 +1,78 @@
+
+<br><br><br>
+<section style="background-color:  #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12">
+        
+        <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+          <div class="card-body p-0">
+            <div class="row g-0">
+              <div class="col-lg-12">
+                <div class="p-5">
+                  <div class="d-flex justify-content-between align-items-center mb-5">
+                    <h1 class=" mb-0 text-black">Wishlist</h1>
+                  </div>
+                  <hr class="my-4">
+                  {{#if length}}
+                  {{#each wishlistProducts}}
+                  <div class="row mb-4 d-flex justify-content-between align-items-center ">
+                    <div class="col-md-2 col-lg-2 col-xl-2">
+                      <a href="/productview?id={{this._id}}"><img src="/productImages/{{this.image.[0]}}" class=" img-fluid rounded-3 " alt="..." /></a>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                      <h6 class="text-black mb-0">{{this.name}} </h6>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                      {{#if this.quantity}}
+                      <a href="/wishlisttocart?id={{this._id}}" class="btn the-userbutton">Add to cart</a>
+                      {{else}}
+                      <a class="text-decoration-none text-danger" href=""><strong>Out of stock</strong></a>
+                      {{/if}}
+                    </div>
+                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                      <button type="button" class="btn btn-danger btn-sm me-1 mb-2" data-mdb-toggle="tooltip"
+                        title="Remove item" onclick="removeWishlistProduct('{{_id}}')">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  {{/each}}
+                  {{else}}
+                  <img src="https://tse3.mm.bing.net/th?id=OIP.wPbsYmMcxEa_Bj86KKUAFQHaHa&pid=Api&P=0" alt=""
+                    style="width: 20vw; height: 25vh;">
+                  <h1>wishlist empty</h1>
+                  {{/if}}
+
+                  <hr class="my-4">
+
+                  <div class="pt-5">
+                    <h6 class="mb-0"><a href="home" class="text-body text-decoration-none"><i
+                          class="fas fa-long-arrow-alt-left me-2"></i>Add More</a></h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  async function removeWishlistProduct(wishlistProductid) {
+    let response = await fetch('/removewishlistproduct/' + wishlistProductid, {
+      method: 'DELETE', headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    let res = await response.json();
+    if (res == "success") {
+      window.location.reload()
+
+    }
+
+  }
+</script>

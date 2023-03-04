@@ -29,7 +29,7 @@
                                                     </form>
                                                 </div>
                                                 <div class="theArea">
-                                                    <table class="table" id="list_users">
+                                                    <table class="table" id="list_users" style="border-radius: 25px;">
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col">Name</th>
@@ -46,11 +46,11 @@
                                                                         alt="..."></td> --}}
                                                                 {{!-- <td>{{this.Subcategory}}</td> --}}
                                                                 <td><a href="/admin/edit-category?id={{this._id}}"
-                                                                        style="border-radius: 5px;"
-                                                                        class="btn btn-primary">Edit</a>
+                                                                       style="border-radius: 5px;background-color: #6da9e4; "
+                                                                        class="btn ">Edit</a>
                                                                     <a href="/admin/delete-category?id={{this._id}}"
                                                                         class="btn btn-danger"
-                                                                        style="border-radius: 5px;"
+                                                                        style="border-radius:5px;  background-color:#51c2d9; border-radius: 5px;  color: #fff;"
                                                                         onclick="return confirm('Are you sure you want to delete {{name}}??')">Delete</a>
                                                                 </td>
                                                             </tr>

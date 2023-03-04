@@ -1,18 +1,59 @@
 const width_threshold = 480;
 
-function drawLineChart() {
+
+async function LineChartData() {
+  let response = await fetch('/admin/dash-bord/', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+
+  });
+  let res = await response.json();
+  if (res) {
+    let pieMonth = []
+    let pieData = []
+    let totalRevenueofMonth = []
+    let totalRevenueofData = []
+    res.pie.forEach(({
+      _id,
+      sum
+    }) => {
+      pieMonth.push(_id.status)
+      pieData.push(sum)
+    })
+
+    res.revenue.forEach(({
+      _id,
+      sum
+    }) => {
+      totalRevenueofMonth.push(_id)
+      totalRevenueofData.push(sum)
+    })
+
+
+
+
+    drawBarChart(totalRevenueofMonth, totalRevenueofData)
+    drawPieChart(pieMonth, pieData)
+    drawLineChart(res.chart.delivered, res.chart.cancelled, res.chart.returned)
+  }
+}
+
+
+LineChartData()
+
+function drawLineChart(delivered,cancelled,returned) {
   if ($("#lineChart").length) {
     ctxLine = document.getElementById("lineChart").getContext("2d");
     optionsLine = {
       scales: {
-        yAxes: [
-          {
-            scaleLabel: {
-              display: true,
-              labelString: "Hits"
-            }
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: "Hits"
           }
-        ]
+        }]
       }
     };
 
@@ -32,26 +73,25 @@ function drawLineChart() {
           "June",
           "July"
         ],
-        datasets: [
-          {
-            label: "Latest Hits",
-            data: [88, 68, 79, 57, 50, 55, 70],
+        datasets: [{
+            label: "Delivered",
+            data: delivered,
             fill: false,
             borderColor: "rgb(75, 192, 192)",
             cubicInterpolationMode: "monotone",
             pointRadius: 0
           },
           {
-            label: "Popular Hits",
-            data: [33, 45, 37, 21, 55, 74, 69],
+            label: "Cancelled",
+            data: cancelled,
             fill: false,
             borderColor: "rgba(255,99,132,1)",
             cubicInterpolationMode: "monotone",
             pointRadius: 0
           },
           {
-            label: "Featured",
-            data: [44, 19, 38, 46, 85, 66, 79],
+            label: "Returned",
+            data: returned,
             fill: false,
             borderColor: "rgba(153, 102, 255, 1)",
             cubicInterpolationMode: "monotone",
@@ -66,25 +106,23 @@ function drawLineChart() {
   }
 }
 
-function drawBarChart() {
+function drawBarChart(month, data) {
   if ($("#barChart").length) {
     ctxBar = document.getElementById("barChart").getContext("2d");
 
     optionsBar = {
       responsive: true,
       scales: {
-        yAxes: [
-          {
-            barPercentage: 0.2,
-            ticks: {
-              beginAtZero: true
-            },
-            scaleLabel: {
-              display: true,
-              labelString: "Hits"
-            }
+        yAxes: [{
+          barPercentage: 0.2,
+          ticks: {
+            beginAtZero: true
+          },
+          scaleLabel: {
+            display: true,
+            labelString: "Hits"
           }
-        ]
+        }]
       }
     };
 
@@ -105,23 +143,21 @@ function drawBarChart() {
     configBar = {
       type: "horizontalBar",
       data: {
-        labels: ["Red", "Aqua", "Green", "Yellow", "Purple", "Orange", "Blue"],
-        datasets: [
-          {
-            label: "# of Hits",
-            data: [33, 40, 28, 49, 58, 38, 44],
-            backgroundColor: [
-              "#F7604D",
-              "#4ED6B8",
-              "#A8D582",
-              "#D7D768",
-              "#9D66CC",
-              "#DB9C3F",
-              "#3889FC"
-            ],
-            borderWidth: 0
-          }
-        ]
+        labels: month,
+        datasets: [{
+          label: "Revenue",
+          data: data,
+          backgroundColor: [
+            "#F7604D",
+            "#4ED6B8",
+            "#A8D582",
+            "#D7D768",
+            "#9D66CC",
+            "#DB9C3F",
+            "#3889FC"
+          ],
+          borderWidth: 0
+        }]
       },
       options: optionsBar
     };
@@ -130,7 +166,7 @@ function drawBarChart() {
   }
 }
 
-function drawPieChart() {
+function drawPieChart(month, data) {
   if ($("#pieChart").length) {
     var chartHeight = 300;
 
@@ -157,18 +193,12 @@ function drawPieChart() {
     configPie = {
       type: "pie",
       data: {
-        datasets: [
-          {
-            data: [18.24, 6.5, 9.15],
-            backgroundColor: ["#F7604D", "#4ED6B8", "#A8D582"],
-            label: "Storage"
-          }
-        ],
-        labels: [
-          "Used Storage (18.240GB)",
-          "System Storage (6.500GB)",
-          "Available Storage (9.150GB)"
-        ]
+        datasets: [{
+          data: data,
+          backgroundColor: [ "#4ED6B8","#F7604D", "#A8D582"],
+          label: "Storage"
+        }],
+        labels: month
       },
       options: optionsPie
     };

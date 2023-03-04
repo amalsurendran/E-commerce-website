@@ -1,39 +1,52 @@
-
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zxx" class="no-js ">
 
 
 
 
 
-	<!-- Start Header Area -->
-	<header class="header_area sticky-header">
-		<div class="main_menu ">
-			<nav class="navbar navbar-expand-lg navbar-light main_box" style="margin-top: 0px;">
-				<div class="container">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<a class="navbar-brand logo_h" href="#">
-						<h2> LensFocus</h2>
-					</a>
-					<div class="input-group">
-			
-					
+<!-- Start Header Area -->
+<header class="header_area sticky-header">
+	<div class="main_menu ">
+		<nav class="navbar navbar-expand-lg navbar-light main_box" style="margin-top: 0px;">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<a class="navbar-brand logo_h" href="#">
+					<h2> LensFocus</h2>
+				</a>
+				
+				<div class="input-group">
+
+
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 						<ul class="nav navbar-nav menu_nav ml-auto">
+							
+							<div class="nav-item active mt-2" >
+								
+								<form action="/search" method="post">
+									<input class="input" name="text"  placeholder="Search here">
+									
+									<button style="border: 0ch;" class=" bg-light"> <i class="fa fa-search"></i></button>
+								</form>
+							</div>
+						
 							<li class="nav-item active"><a class="nav-link" href="home">Home</a></li>
 							<li class="nav-item submenu dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
 									aria-haspopup="true" aria-expanded="false">Shop</a>
 								<ul class="dropdown-menu">
 									<li class="nav-item"><a class="nav-link" href="shop-category">Shop Category</a></li>
-									<li class="nav-item"><a class="nav-link" href="single-product.html">Product
-											Details</a></li>
+									{{!-- <li class="nav-item"><a class="nav-link" href="single-product.html">Product
+											--}}
+
+											{{!--
 									<li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a>
+									</li> --}}
+									{{!-- <li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a>
 									</li>
-									<li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
 									<li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a>
-									</li>
+									</li> --}}
 								</ul>
 							</li>
 							<li class="nav-item submenu dropdown">
@@ -42,75 +55,85 @@
 								{{else}}
 								<a href="/login" class="nav-link dropdown-toggle">LOG IN</a>
 								{{/if}}
-								
+
 							</li>
 							<li class="nav-item submenu dropdown">
 								<a href="/logout" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
 									aria-haspopup="true" aria-expanded="false">Pages</a>
-								<ul class="dropdown-menu">
+								{{!-- <ul class="dropdown-menu">
 									<li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
 									<li class="nav-item"><a class="nav-link" href="tracking.html">Tracking</a></li>
 									<li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
-								</ul>
+								</ul> --}}
 							</li>
 							<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
 						</ul>
 						{{#if logged}}
 						<ul class="nav navbar-nav navbar-right">
-							<li class="nav-item"><a href="cart" class="cart"><span><i class="fa-solid fa-cart-shopping"></i></span></a></li>
-							<li class="nav-item"><a href="user-profile"><span><i class="fa-solid fa-user"></i></span></a>
-								
+							<li class="nav-item"><a href="cart" class="cart"><span><i
+											class="fa-solid fa-cart-shopping"></i></span></a></li>
+							<li class="nav-item"><a href="user-profile"><span><i
+											class="fa-solid fa-user"></i></span></a>
+
 							</li>
-							<li class="nav-item"><a href=""><span><i class="fa-solid fa-magnifying-glass"></i></span></a>
-								
-							</li>
+							{{!-- <li class="nav-item"><a href=""><span><i
+											class="fa-solid fa-magnifying-glass"></i></span></a>
+
+							</li> --}}
+							<li class="nav-item"><a href="wishlist" class="cart"><span><i
+											class="fa-solid fa-heart"></i></span></a></li>
 						</ul>
 
 						{{else}}
 						<ul class="nav navbar-nav navbar-right">
-							<li class="nav-item"><a href="/login" class="cart"><span><i class="fa-solid fa-cart-shopping"></i></span></a></li>
+							<li class="nav-item"><a href="/login" class="cart"><span><i
+											class="fa-solid fa-cart-shopping"></i></span></a></li>
 							<li class="nav-item"><a href="/login"><span><i class="fa-solid fa-user"></i></span></a>
-								
+
 							</li>
-							<li class="nav-item"><a href=""><span><i class="fa-solid fa-magnifying-glass"></i></span></a>
-								
-							</li>
+							{{!-- <li class="nav-item"><a href=""><span><i
+											class="fa-solid fa-magnifying-glass"></i></span></a>
+
+							</li> --}}
+							<li class="nav-item"><a href="wishlist" class="cart"><span><i
+											class="fa-solid fa-heart"></i></span></a></li>
 						</ul>
 						{{/if}}
-						
+
 					</div>
 				</div>
-				
-			</nav>
-			
-		</div>
-{{!-- 		
-		<div class="search_input" id="search_input_box">
-			<div class="container">
-				<form class="d-flex justify-content-between">
-					<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-					<button type="submit" class="btn"></button>
-					<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
-				</form>
 			</div>
-		</div> --}}
-	</header>
+		</nav>
+
+	</div>
+	{{!--
+	<div class="search_input" id="search_input_box">
+		<div class="container">
+			<form class="d-flex justify-content-between">
+				<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."
+					title="Type in a name">
+				<button type="submit" class="btn"></button>
+				<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
+			</form>
+		</div>
+	</div> --}}
+</header>
 
 <script>
-function myFunction() {
-    var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    ul = document.getElementById("myUL");
-    li = ul.getElementsByTagName("li");
-    for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName("a")[0];
-        txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-        } else {
-            li[i].style.display = "none";
-        }
-    }
-}
+	function myFunction() {
+		var input, filter, ul, li, a, i, txtValue;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		ul = document.getElementById("myUL");
+		li = ul.getElementsByTagName("li");
+		for (i = 0; i < li.length; i++) {
+			a = li[i].getElementsByTagName("a")[0];
+			txtValue = a.textContent || a.innerText;
+			if (txtValue.toUpperCase().indexOf(filter) > -1) {
+				li[i].style.display = "";
+			} else {
+				li[i].style.display = "none";
+			}
+		}
+	}
 </script>

@@ -1,5 +1,6 @@
 const Category = require('../Models/categoryModel');
 const { ObjectId } = require('mongodb');
+const product = require('../Models/productModel');
 
 const loadCategory = async (req, res, next) => {
     try {
@@ -31,7 +32,7 @@ const insertCategory = async (req, res, next) => {
 
     try {
         
-        const categoryata = await Category.findOne({_id:req.body.id})
+        const categoryata = await Category.find({name:req.body.name})
         if (categoryata) {
             console.log(categoryata);
             res.render('add-category', {
@@ -42,8 +43,7 @@ const insertCategory = async (req, res, next) => {
         } else {
             const category = new Category({
                 name: req.body.name,
-                image:req.file.filename,
-                Subcategory:req.body.subname
+               
             });
 
             const categoryData = await category.save();
@@ -118,8 +118,11 @@ const deleteCategory = async (req, res, next) => {
 
 const loadshopcategory = async(req,res)=>{
     try {
+        const productData = await product.find({
+            soft_delete: false
+        });
         const categoryData = await Category.find({})
-        res.render('shopcategory',{category:categoryData,logged:1})
+        res.render('shopcategory',{category:categoryData,logged:1,product:productData})
     } catch (error) {
         console.log(error);
     }

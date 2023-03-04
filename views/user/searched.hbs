@@ -1,0 +1,56 @@
+
+<br><br><br>
+<section class="rounded-3" style="background-color: #eee;">
+    <div class="text-center container py-5">
+        <div class="row">
+            {{#if length}}
+            {{#each products}}
+            <div class=" col-lg-3 col-md-12 mb-3">
+                <div class="card ">
+                    <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
+                        data-mdb-ripple-color="light">
+
+                        <a href="/product-view?id={{this._id}}"> <img src="/productImages/{{this.image.[0]}}"
+                                class="w-100" alt="..." width="200px" height="210px"></a>
+                        <div class="hover-overlay">
+                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);">
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <a href="" class="text-reset text-decoration-none ">
+                            <p>{{Product.0.name}}</p>
+                        </a>
+                        <a href="" class="text-reset text-decoration-none ">
+                            <h6 class="card-title mb-3 ">{{this.name}}</h6>
+                        </a>
+
+                        <span class="text-danger act-price text-decoration-line-through">
+                            <h6 class="l-through">$210.00</h6>
+                        </span>
+                        <h6 class="mb-3">₹{{this.price}}</h6>
+                    </div>
+
+                    <div class="card-body">
+                        <a href="/addtowishlist?id={{this._id}}" class="btn the-userdbutton">Add to
+                            Wishlist</a>
+                        {{#if this.quantity}}
+                        <a class="btn the-userbutton" href="/addtocart?id={{this._id}}">Add to Cart</a>
+                        {{else}}
+                        <a class="text-decoration-none text-danger " href=""><strong>Out of
+                                stock</strong></a>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+            {{else}}
+            <div style="height: 400px;" >
+                <img src="https://trolleymate.co.uk/assets/img/error_404.jpeg" alt=""
+                   class="img-fluid " >
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</section>

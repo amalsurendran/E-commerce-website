@@ -15,7 +15,7 @@
                           <h1 class="thenewarrival">User Management</h1>
                         </center>
                         <div class="theArea">
-                          <table class="table" id="list_users">
+                          <table class="table" id="list_users"  style="border-radius: 25px;">
                             <thead>
                               <tr>
                                 <th scope="col">Name</th>
@@ -35,9 +35,9 @@
 
                                 <td>
                                   {{#if this.blocked}}
-                                  <a href="/admin/unblock-user?id={{this._id}}" style="border-radius:5px;" class="btn btn-primary w-100">Unblock</a>
+                                  <a href="/admin/unblock-user?id={{this._id}}" style="border-radius:5px;  background-color:#d95151; border-radius: 5px;  color: #fff;"class="btn w-100">Unblock</a>
                                   {{else}}
-                                  <a href="/admin/block-user?id={{this._id}}" style="border-radius: 5px;" class="btn btn-danger w-100">Block</a>
+                                  <a href="/admin/block-user?id={{this._id}}" style="border-radius:5px;  background-color:#51c5d9; border-radius: 5px;  color: #fff;" class="btn  w-100">Block</a>
                                   {{/if}}
                                 </td>
                                 <td>

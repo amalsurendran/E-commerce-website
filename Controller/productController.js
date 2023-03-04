@@ -89,10 +89,14 @@ const productinsert = async (req, res, next) => {
 
 const updateProduct = async (req, res, next) => {
     try {
-
+        const images = req.files.map((file) => {
+            return file.filename
+        })
+        
         const id = req.body.id
-        if (req.file) {
-            const productData = await product.findByIdAndUpdate({
+        if (images) {
+           
+            const productData = await product.findOneAndUpdate({
                 _id: id
             }, {
                 $set: {
@@ -100,8 +104,13 @@ const updateProduct = async (req, res, next) => {
                     category: req.body.category,
                     price: req.body.price,
                     description: req.body.description,
-                    image: req.file.filename
-                }
+                    // image:images,
+                    quantity: req.body.quantity
+                },
+                $push: {
+                    image:  images ?? [] 
+                  },
+        
             });
         } else {
             const productData = await product.findByIdAndUpdate({
@@ -112,6 +121,7 @@ const updateProduct = async (req, res, next) => {
                     category: req.body.category,
                     price: req.body.price,
                     description: req.body.description,
+                    quantity: req.body.quantity
                 }
             });
         }

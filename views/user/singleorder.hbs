@@ -3,10 +3,13 @@
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-lg-10 col-xl-12">
+         <div class="d-flex justify-content-end mb-3">
+                                <button class="btn the-userbutton" id="download"> download invoice</button>
+                            </div>
         {{#each order}}
         <div class="card" style="border-radius: 10px;">
 
-          <div class="card-body p-4">
+          <div class="card-body p-4" id="invoice">
             <div class="d-flex justify-content-between align-items-center mb-4">
               <p class="lead fw-normal mb-0" style="color: #a8729a;">Order Summary</p>
               <p class="small text-muted mb-0">Order ID : {{orderId}}</p>
@@ -62,7 +65,9 @@
 
             </div>
 
-            <div class="d-flex justify-content-between mb-5">
+            
+          </div>
+          <div class="d-flex justify-content-between mb-5">
               {{#ifeq this.status "processing"}}
               <a href="/cancel-order?id={{this._id}}" class="text-danger text-decoration-none"
                 data-bs-toggle="modal" data-bs-target="#exampleModal{{@index}}"><strong>Cancel Order</strong></a>
@@ -79,7 +84,6 @@
               {{/ifeq}}
 
             </div>
-          </div>
 
         </div>
         {{#ifeq this.status "processing"}}
@@ -150,3 +154,190 @@
     </div>
   </div>
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{!-- <section style="background-color: #eee;">
+    <div class=" p-5 container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card text-black" style="border-radius: 25px;">
+                    <div class="card-body p-md-5">
+                        <div>
+
+                            <div class="d-flex justify-content-end mb-3">
+                                <button class="btn the-userbutton" id="download"> download invoice</button>
+                            </div>
+
+                            <div id="invoice">
+                                <p class="text-center h1  mb-5 mx-1 mx-md-4 mt-4">Order Details</p>
+                                <div>
+                                    {{#each myorders}}
+                                    <div class="card" style="border-radius: 10px;">
+
+                                        <div class="card-body p-4">
+                                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                                <p class="lead fw-normal mb-0" style="color: rgb(105, 12, 162);">
+                                                    <strong>Billing details</strong>
+                                                </p>
+                                                <p class=" mb-0">Order ID : {{orderId}}</p>
+                                            </div>
+                                            {{#each product}}
+                                            <div class="card shadow-0 border mb-4">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div
+                                                            class="col-md-4 text-center d-flex justify-content-center align-items-center">
+                                                            <a href="/productview?id={{id}}"
+                                                                class="text-decoration-none text-dark">
+                                                                <p class="mb-0">{{name}}</p>
+                                                            </a>
+                                                        </div>
+                                                        <div
+                                                            class="col-md-4 text-center d-flex justify-content-center align-items-center">
+                                                            <p class="text-muted mb-0 small">Price : ₹{{price}}</p>
+                                                        </div>
+                                                        <div
+                                                            class="col-md-4 text-center d-flex justify-content-center align-items-center">
+                                                            <p class="text-muted mb-0 small">Quantity : {{quantity}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{/each}}
+                                            <div class="d-flex justify-content-between pt-2">
+                                                <p class="fw-bold mb-0">Order Details</p>
+
+                                            </div>
+
+                                            <div class="d-flex justify-content-between pt-2">
+
+                                                <p class="text-muted mb-0"><span class="fw-bold me-4">Ordered date :
+                                                    </span>{{date}}</p>
+
+
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                {{#ifeq this.status "Processing"}}
+                                                <p class="text-muted mb-0"><span class="fw-bold me-4">Order Status
+                                                        :</span>Processing</p>
+                                                {{/ifeq}}
+                                                {{#ifeq this.status "Shipped"}}
+                                                <p class="text-muted mb-0"><span class="fw-bold me-4">Order Status
+                                                        :</span>Shipped</p>
+                                                {{/ifeq}}
+                                                {{#ifeq this.status "Out for Delivery"}}
+                                                <p class="text-muted mb-0"><span class="fw-bold me-4">Order Status
+                                                        :</span>Out for Delivery</p>
+                                                {{/ifeq}}
+                                                {{#ifeq this.status "Delivered"}}
+                                                <p class="text-muted mb-0"><span class="fw-bold me-4">Delivered Date
+                                                        :</span>{{delivery_date}}</p>
+                                                {{/ifeq}}
+                                                {{#ifeq this.status "Cancelled"}}
+                                                <p class="text-muted mb-0"><span class="fw-bold me-4">Order Status
+                                                        :</span>Cancelled</p>
+                                                {{/ifeq}}
+                                                {{#ifeq this.status "Returned"}}
+                                                <p class="text-muted mb-0"><span class="fw-bold me-4">Order Status
+                                                        :</span>Returned</p>
+                                                {{/ifeq}}
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+
+                                                <p class="text-muted mb-0"><span class="fw-bold me-4">Address:
+                                                    </span>{{addressId}}</p>
+
+                                            </div>
+
+
+                                            <div class="d-flex justify-content-between pt-2">
+                                                <p class="fw-bold mb-0">Payment Details</p>
+                                            </div>
+
+                                            <div class="d-flex justify-content-between">
+                                                <p class="text-muted mb-0"><span class="fw-bold me-4">
+                                                        Amount :</span>₹{{orderPrice}}</p>
+                                            </div>
+
+                                            <div class="d-flex justify-content-between">
+                                                <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery
+                                                        :</span>Free</p>
+                                            </div>
+
+                                            <div class="d-flex justify-content-between">
+                                                <p class="text-muted mb-0"><span class="fw-bold me-4">Total
+                                                        Amount :</span>₹{{orderPrice}}</p>
+                                            </div>
+
+                                            <div class="d-flex justify-content-between">
+                                                {{#ifeq this.payment_method 1}}
+                                                <h6> Payment mode : Cash on delivery</h6>
+                                                {{/ifeq}}
+                                                {{#ifeq this.payment_method 2}}
+                                                <h6> Payment mode : Razorpay</h6>
+                                                {{/ifeq}}
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+                                    {{/each}}
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <h3 class="eniac-text">eniac Ecommerce</h3>
+                                </div>
+
+                            </div>
+                            <div class="d-flex  mb-3">
+                                <a href="/myorders" style="text-decoration: none; color: #6a6c6d;"><i
+                                        class="fa fa-long-arrow-left"></i> <span class="ml-1">Back</span></a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section> --}}
+
+
+<script>
+    window.onload = function () {
+        document.getElementById("download")
+            .addEventListener("click", () => {
+                const invoice = this.document.getElementById("invoice");
+                console.log(invoice);
+                console.log(window);
+                var opt = {
+                    margin: 1,
+                    filename: 'invoice.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+                html2pdf().from(invoice).set(opt).save();
+            })
+    }
+</script>

@@ -1,7 +1,7 @@
 
 
 	<title>Product Admin - Dashboard HTML Template</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
+
     <!-- https://fonts.google.com/specimen/Roboto -->
     <link rel="stylesheet" href="/css/fontawesome.min.css">
     <!-- https://fontawesome.com/ -->
@@ -23,42 +23,55 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto h-100">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/admin/admin-home">
+                            {{#if orderdata}}
+                            <a class="nav-link active " href="/admin/">
+                            {{else}}
+                            <a class="nav-link  " href="/admin/">
+{{/if}}
                                 <i class="fas fa-tachometer-alt"></i>
                                 Dashboard
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item dropdown">
-
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+{{#if category}}
+                            <a class="nav-link dropdown-toggle active" href="/admin/category" 
                                 aria-haspopup="true" aria-expanded="false">
+                                {{else}}
+                                <a class="nav-link dropdown-toggle" href="/admin/category" 
+                                aria-haspopup="true" aria-expanded="false">
+                                {{/if}}
                                 <i class="far fa-file-alt"></i>
                                 <span>
-                                    Category <i class="fas fa-angle-down"></i>
+                                    Category </i>
                                 </span>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {{!-- <a class="dropdown-item" href="/admin/users">Users</a> --}}
-                                <a class="dropdown-item" href="/admin/category">Category</a>
-                                {{!-- <a class="dropdown-item" href="#">Yearly Report</a> --}}
-                            </div>
+                           
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/product">
+                            {{#if product}}
+                            <a class="nav-link active" href="/admin/product">
+                            {{else}}
+                             <a class="nav-link" href="/admin/product">
+                             {{/if}}
                                 <i class="fas fa-shopping-cart"></i>
                                 Products
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/users">
+                            {{#if users}}
+                            <a class="nav-link active" href="/admin/users">
+                            {{else}}
+                             <a class="nav-link" href="/admin/users">
+                             {{/if}}
                                 <i class="far fa-user"></i>
                                 Users
                             </a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                           
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-cog"></i>
                                 <span>
@@ -66,9 +79,10 @@
                                 </span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/admin/orders">Order</a>
-                                <a class="dropdown-item" href="/admin/banner">Banner</a>
-                                <a class="dropdown-item" href="#">Customize</a>
+                                <a class="dropdown-item " href="/admin/orders">Order</a>
+                                <a class="dropdown-item " href="/admin/banner">Banner</a>
+                                <a class="dropdown-item " href="/admin/coupon">Coupon</a>
+                                 <a class="dropdown-item " href="/admin/sales-report">Sales Report</a>
                             </div>
                         </li>
                     </ul>

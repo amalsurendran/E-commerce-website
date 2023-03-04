@@ -7,10 +7,12 @@
 
 	<!--================Order Details Area =================-->
 	<section class="order_details section_gap">
-        {{#each order}}
+       
 		<div class="container">
+		
 			<h3 class="title_confirmation">Thank you. Your order has been received.</h3>
 			<div class="row order_d_inner">
+				{{#each order}}
 				<div class="col-lg-6">
 					<div class="details_item">
 						<h4>Order Info</h4>
@@ -27,6 +29,7 @@
 						</ul>
 					</div>
 				</div>
+				{{/each}}
 				{{!-- <div class="col-lg-4">
 					<div class="details_item">
 						<h4>Billing Address</h4>
@@ -53,9 +56,11 @@
 			<div class="order_details_table">
 				<h2>Order Details</h2>
 				<div class="table-responsive">
-                    {{#each product}}
+                    
 					<table class="table">
+						{{#each order}}
 						<thead>
+							{{#each product}}
 							<tr>
 								<th scope="col">Product</th>
 								<th scope="col">Quantity</th>
@@ -129,13 +134,15 @@
 									<p>{{../subtotal}}</p>
 								</td>
 							</tr>
+							{{/each}}
 						</tbody>
+						      {{/each}}
 					</table>
-                    {{/each}}
+                   
 				</div>
 			</div>
 		</div>
-        {{/each}}
+   
 	</section>
 	
 </body>

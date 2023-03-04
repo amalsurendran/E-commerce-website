@@ -24,7 +24,7 @@
                                         </div>
                                         <div class="theArea">
                                             <center>
-                                                <table id="list_users" class="table " >
+                                                <table id="list_users" class="table "  style="border-radius:25px;" >
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">Name</th>
@@ -49,12 +49,12 @@
                                                             <td>
                                                                 <p>{{this.description}}</p>
                                                             </td>
-                                                            <td><a  style="border-radius: 5px; background-color:#f5a623 "href="/admin/edit-product?id={{this._id}}"
+                                                            <td><a  style="border-radius: 5px;background-color: #6da9e4; "href="/admin/edit-product?id={{this._id}}"
                                                                    
                                                                     class="btn btn-info w-100">UPDATE</a> &nbsp;
-                                                                <a  style="border-radius: 5px;" href="/admin/delete-product?id={{this._id}}"
-                                                                    style="background-image: linear-gradient(rgba(255, 0, 0, 0.819), rgb(255, 0, 0))"
-                                                                    class="btn btn-danger w-100 "
+                                                                <a   href="/admin/delete-product?id={{this._id}}"
+                                                                    style="border-radius:5px;  background-color:#51c2d9; border-radius: 5px;  color: #fff;"
+                                                                    class="btn  w-100 "
                                                                     onclick="return confirm('Are you sure you want to delete?')">Delete</a>
                                                             </td>
                                                             <td>

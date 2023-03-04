@@ -1,7 +1,3 @@
-
-
-
-
 <div class="container tm-mt-big tm-mb-big">
     <div class="row">
         <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
@@ -17,32 +13,35 @@
                             <div class="form-group mb-3">
                                 <label for="name">Product Name
                                 </label>
-                                <input id="name" name="name" value="{{product.name}}"  type="text" class="form-control validate" required />
+                                <input id="name" name="name" value="{{product.name}}" type="text"
+                                    class="form-control validate" required />
                             </div>
                             <div class="form-group mb-3">
                                 <label for="description">Description</label>
-                                <input class="form-control validate" rows="3"  value="{{product.description}}"  required name="description"></input>
+                                <input class="form-control validate" rows="3" value="{{product.description}}" required
+                                    name="description"></input>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="category">Category</label>
-                          
-                                   
-                                     <input class="form-control" type="text" name="category" value="{{product.category}}" placeholder="enter category" required>
-                                   
-                               
+
+
+                                <input class="form-control" type="text" name="category" value="{{product.category}}"
+                                    placeholder="enter category" required>
+
+
                             </div>
                             <div class="row">
                                 <div class="form-group mb-3 col-xs-12 col-sm-6">
                                     <label for="expire_date">Price
                                     </label>
-                                    <input id="expire_date" name="price" value="{{product.price}}"  type="text" class="form-control validate"
-                                        data-large-mode="true" />
+                                    <input id="expire_date" name="price" value="{{product.price}}" type="text"
+                                        class="form-control validate" data-large-mode="true" />
                                 </div>
                                 <div class="form-group mb-3 col-xs-12 col-sm-6">
                                     <label for="stock">Units In Stock
                                     </label>
-                                    <input id="stock" name="quantity"  value="{{product.quantity}}" type="text" class="form-control validate"
-                                        required />
+                                    <input id="stock" name="quantity" value="{{product.quantity}}" type="text"
+                                        class="form-control validate" required />
                                 </div>
 
                             </div>
@@ -54,11 +53,12 @@
                                 onclick="document.getElementById('fileInput').click();"></i>
                         </div>
                         <div class="custom-file mt-3 mb-3">
-                            <input id="fileInput" type="file" name="image" accept="image/*" style="display:none;" />
+                            <input id="fileInput" type="file" name="image" accept="image/*" style="display:none;"
+                                multiple />
                             <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
                                 onclick="document.getElementById('fileInput').click();" />
                         </div>
-                        <img src="/productImages/{{product.image}}"  alt="..." >
+
                     </div>
                     {{!-- <div class="form-group mb-3 col-xs-12 col-sm-6">
                         <label for="stock">Brand
@@ -71,8 +71,38 @@
                     </div>
                     <input type="hidden" name="id" value="{{product._id}}">
                     </form>
+                    <br>
+
+
                 </div>
+                {{#each product}}
+                <div class="row">
+                    <div>{{#each image}}
+                        <img class="img-fluid w-25" src="/productImages/{{this}}" alt="...">
+                        <button onclick="removeCartProduct('{{this}}','{{../_id}}')"> <i
+                                class="fas fa-times"></i></a></button>
+                        {{/each}}
+                    </div>
+
+                </div>
+                {{/each}}
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    async function removeCartProduct(imagename, productId) {
+        let response = await fetch('/admin/removeimage/' + imagename + '/' + productId, {
+             method: 'DELETE', headers: {
+        'Content-Type': 'application/json',
+      },
+        });
+        let res = await response.json();
+          if (res == "success") {
+      window.location.reload()
+
+    }
+
+    }
+</script>

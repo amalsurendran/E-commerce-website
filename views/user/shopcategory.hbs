@@ -33,5 +33,38 @@
 		    </div>
 		</div>
 </section>
+<div class="row">
+					<!-- single product -->
+					{{#each product}}
+					<div class="col-lg-3 col-md-6">
+						<div class="single-product">
+							<a href="/product-view?id={{this._id}}"><img class="img-fluid"
+									src="/productImages/{{this.image.[0]}}" alt=""></a>
+							<div class="product-details">
+								<h6>{{this.name}}</h6>
+								<div class="price">
+									<h6>${{this.price}}</h6>
+									<h6 class="l-through">$210.00</h6>
+								</div>
+								<div class="prd-bottom">
+
+									<a href="addtocart?id={{this._id}}" class="social-info">
+										<span><i class="fa-solid fa-cart-shopping"></i></span>
+										<p class="hover-text">add to bag</p>
+									</a>
+									<a href="" class="social-info">
+										<span><i class="fa-solid fa-heart"></i></span>
+										<p class="hover-text">Wishlist</p>
+									</a>
+									<a href="" class="social-info">
+										<span class="lnr lnr-move"></span>
+										<p class="hover-text">view more</p>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					{{/each}}
+		</div>
 		</div>
 	</section>

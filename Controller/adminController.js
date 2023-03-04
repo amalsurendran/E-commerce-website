@@ -3,14 +3,16 @@ const bcrypt = require('bcrypt');
 const config = require('../config/config');
 const user = require('../models/userModel');
 const Order = require('../Models/orderModel')
-
+const product = require('../Models/productModel');
+const Coupon = require('../Models/couponModel')
+const moment = require('moment')
 
 
 const loadLogin = async (req, res, next) => {
     try {
 
         if (req.session.admin_id) {
-            res.redirect('/admin/adminhome')
+            res.redirect('/admin/admin-home')
         } else {
             res.render("adminlog", {
                 adminlog: false
@@ -23,10 +25,22 @@ const loadLogin = async (req, res, next) => {
 }
 const loadHome = async (req, res, next) => {
     try {
-        const orderdata = await Order.find({}).sort({_id:-1}).lean()
+        const email = req.body.email;
+
+        const checkAdmin = await admin.findOne({
+            email: email
+        });
+
+        const orderdata = await Order.find({}).sort({
+            _id: -1
+        }).lean()
         res.render('adminhome', {
-            adminlog: true,order:orderdata
+            adminlog: true,
+            orderdata: orderdata,
+            checkAdmin
         })
+
+
 
     } catch (error) {
         console.log(error);
@@ -34,7 +48,9 @@ const loadHome = async (req, res, next) => {
 }
 const AdminverifyLogin = async (req, res, next) => {
     try {
-        const orderdata = await Order.find({}).sort({_id:-1}).lean()
+        const orderdata = await Order.find({}).sort({
+            _id: -1
+        }).lean()
         const email = req.body.email;
         const password = req.body.password;
         const checkAdmin = await admin.findOne({
@@ -46,9 +62,7 @@ const AdminverifyLogin = async (req, res, next) => {
             const passwordMatch = await bcrypt.compare(password, checkAdmin.password);
             if (passwordMatch) {
                 req.session.admin_id = checkAdmin._id;
-                res.render('adminhome', {
-                    adminlog: true,orderdata,checkAdmin
-                })
+                res.redirect('/admin/')
             } else {
                 res.render('adminlog', {
                     adminlog: false,
@@ -171,17 +185,256 @@ const unBlockUser = async (req, res) => {
     }
 }
 
-const loadOrder= async (req, res) => {
+const loadOrder = async (req, res) => {
     try {
+
+        const orderData = await Order.find({}).sort({
+            _id: -1
+        })
+
+        res.render("orders", {
+            orders: orderData,
+            adminlog: 1
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+
+const dashboardData = async (req, res, next) => {
+    try {
+
+        const totalDeliveredsum = await Order.aggregate([{
+            $match: {
+                status: 'Delivered'
+            },
+        }, {
+            $group: {
+                _id: {
+                    $month: '$date'
+
+                },
+                sum: {
+                    $sum: '$subtotal'
+                }
+            }
+        }])
+
+        const Piechart = await Order.aggregate([{
+            $match: {
+                $or: [{
+                    status: 'Returned'
+                }, {
+                    status: 'Delivered'
+                }, {
+                    status: 'Cancelled',
+                }]
+            },
+        }, {
+            $group: {
+                _id: {
+                    status: '$status',
+                },
+                sum: {
+                    $sum: 1
+                }
+            }
+        }])
+
+        const Cancelorder = await Order.aggregate([{
+            $match: {
+                $or: [{
+                    status: 'Returned'
+                }, {
+                    status: 'Delivered'
+                }, {
+                    status: 'Cancelled',
+                }]
+            },
+        }, {
+            $group: {
+                _id: {
+                    status: '$status',
+                    date: {
+                        $month: '$date'
+                    },
+                },
+                sum: {
+                    $sum: 1
+                }
+            }
+        }])
+
+        let months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        let Delivered = []
+        let delivered = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        let Returned = []
+        let returned = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        let Cancelled = []
+        let cancelled = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+        Cancelorder.forEach((item) => {
+            if (item._id.status == 'Delivered')
+                Delivered.push(item)
+
+            if (item._id.status == 'Returned')
+                Returned.push(item)
+
+            if (item._id.status == 'Cancelled')
+                Cancelled.push(item)
+
+        })
+
+
+        for (let index = 0; index < 12; index++) {
+            months.forEach((item) => {
+                if (Delivered[index]) {
+                    if (item == Delivered[index]._id.date)
+                        delivered[item - 1] = Delivered[index].sum
+                }
+
+                if (Returned[index]) {
+                    if (item == Returned[index]._id.date)
+                        returned[item - 1] = Returned[index].sum
+                }
+
+                if (Cancelled[index]) {
+                    if (item == Cancelled[index]._id.date)
+                        cancelled[item - 1] = Cancelled[index].sum
+                }
+            })
+        }
+
+        res.json({
+            pie: Piechart,
+            revenue: totalDeliveredsum,
+            chart: {
+                delivered,
+                cancelled,
+                returned
+            }
+        })
+    } catch (error) {
+        console.log(error);
+        next(error)
+    }
+}
+
+
+const loadcoupons = async (req, res) => {
+    try {
+        const couponData = await Coupon.find()
+
+        res.render('coupon', {
+            adminlog: true,
+            coupon: couponData
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//add new coupon
+const addCoupon = async (req, res) => {
+    try {
+        res.render('add-coupon', {
+            adminlog: true
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const insertcoupon = async (req, res) => {
+    try {
+        const coupon = new Coupon({
+            code: req.body.code,
+            date: req.body.date,
+            percentage: req.body.percent
+        })
+        const couponData = await coupon.save()
+
+        if (couponData) {
+            res.redirect('/admin/coupon')
+        } else {
+            res.redirect('/admin/add-coupon')
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+const deleteimage = async (req, res) => {
+
+    try {
+        
+        const {
+            img,
+            id
+        } = req.params
+        const result = await product.updateOne({
+            _id:id
+        }, {
+            $pull: {
+                image :img
+            }
+
+        });
+        if(result){ res.json("success")}
+        else{
+            res.json('error')
+        }
+       
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const salesReport = async (req, res, next) => {
+    
+    try {
+        console.log("amal");
+      let { fromdate, todate } = req?.query ?? {};
+      let salesReport;
+      let total = 0;
       
-        const orderData = await Order.find({}).sort({_id:-1})
+      if (fromdate && todate) {
+        fromdate = new Date(fromdate);
+        todate = new Date(todate);
   
-      res.render("orders",{orders:orderData,adminlog:1});
+        if (req?.query?.fromdate == req?.query?.todate && todate && fromdate)
+          todate.setDate(todate.getDate() + 1);
+  
+        salesReport = await Order.find({
+          date: { $gte: fromdate, $lt: todate },
+        }).lean();
+        console.log(salesReport);
+        salesReport.forEach((item) => {
+          item.date = moment(item.date).format("DD-MM-YYYY");
+          total = total + item.total_amount;
+        });
+      } else {
+        salesReport = await Order.find({}).limit(10).lean();
+        salesReport.forEach((item) => {
+          item.date = moment(item.date).format("DD-MM-YYYY");
+          total = total + item.total_amount;
+        });
+      }
+     console.log(salesReport,total,req.query.fromdate,req.query.todate,'426---')
+     
+      res.render("sales", {
+        salesReport:salesReport,
+        total: total,
+        fromDate: req.query.fromdate,
+        toDate: req.query.todate,
+      });
     } catch (error) {
       console.log(error);
-    }
+  }
   };
-
 
 
 
@@ -195,5 +448,12 @@ module.exports = {
     loadLogout,
     blockUser,
     unBlockUser,
-    loadOrder
+    loadOrder,
+    dashboardData,
+    loadcoupons,
+    addCoupon,
+    insertcoupon,
+    deleteimage,
+    salesReport
+
 }

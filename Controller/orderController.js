@@ -1,13 +1,15 @@
 const user = require('../models/userModel');
 const Order = require('../Models/orderModel')
 const product = require('../Models/productModel');
+const Coupon = require('../Models/couponModel')
 const { ObjectId } = require('mongodb');
+const moment = require('moment')
 
 
 const loadOrder = async(req,res)=>{
     try {
         const orderData = await Order.find({userId: req.session.user_id}).sort({_id:-1})
-        res.render('myOrders',{order:orderData,logged:1})
+        res.render('myOrders',{order:orderData,loggedd:1})
     } catch (error) {
         console.log(error)
     }
@@ -138,7 +140,119 @@ const successorder = async(req,res,next)=>{
         
     }
 }
+let offerPrice
+const coupon = async(req,res,next)=>{
+    try {
 
+
+      const codeId = req.body.code
+        const total = req.body.total 
+      const couponData = await Coupon.findOne({code:codeId}).lean();
+      console.log(couponData);
+      const userData = await Coupon.findOne({code:codeId, userId:req.session.user_id}).lean()
+   
+      if(couponData && couponData.date > moment().format("YYYY-MM-DD")){
+        offerPrice = couponData.percentage
+ 
+       
+        if(userData){
+          res.json("fail")
+        }else{
+            const amount = total*offerPrice/100
+            const gtotal = total-amount
+          res.json({offerPrice:offerPrice,gtotal:gtotal,total:total})
+          const userupdate = await Coupon.updateOne({code:codeId},{$push:{userId:req.session.user_id}})
+        }
+      }else{
+        res.json('fail')
+      }
+     
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  const loadSales =async(req,res)=>{
+    try {
+        const orderData = Order.find({})
+        res.render('sales',{order:orderData,adminlog:1})
+    } catch (error) {
+        
+    }
+  }
+
+  const loadWishlist = async (req, res) => {
+
+    try {
+        const wishlistData = await user.aggregate([
+            { $match: { _id: ObjectId(req.session.user_id) } },
+            {
+                $lookup: {
+                    from: "products",
+                    localField: 'wishlist.productId',
+                    foreignField: '_id',
+                    as: 'Wishlist'
+                }
+            }
+        ]);
+        const wishlistProducts = wishlistData[0].Wishlist
+
+        const length = wishlistProducts.length
+
+        res.render('whishlist', { wishlistProducts, length , logged:1});
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const addToWishlist = async (req, res) => {
+    try {
+        
+            const id = req.query.id;
+            const wishlistData = await user.updateOne({ _id: req.session.user_id }, {
+                $addToSet: {
+                    wishlist: { productId: id }
+                }
+            });
+            res.redirect('/home');
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const removeWishlistProduct = async (req, res) => {
+    try {
+        const result = await user.findByIdAndUpdate({ _id: req.session.user_id }, {
+            $pull: {
+                wishlist: { productId: req.params.id }
+            }
+        });
+        res.json("success")
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+const wishlistToCart = async (req, res) => {
+    try {
+        const result = await user.updateOne({ _id: req.session.user_id }, {
+            $addToSet: {
+                cart: { productId: ObjectId(req.query.id) }
+            }
+        });
+        if (result) {
+            const deletee = await user.findByIdAndUpdate({ _id: req.session.user_id }, {
+                $pull: {
+                    wishlist: { productId: req.query.id }
+                }
+            })
+        }
+        res.redirect('/wishlist')
+    } catch (error) {
+        console.log(error.message)
+    }
+}
 
 module.exports ={
     loadOrder,
@@ -146,5 +260,11 @@ module.exports ={
     cancelOrder,
     viewShopProducts,
     loadviewproduct,changestatus,
-    successorder
+    successorder,
+    coupon,
+    loadSales,
+    loadWishlist ,
+    addToWishlist,
+    removeWishlistProduct,
+    wishlistToCart
 }
