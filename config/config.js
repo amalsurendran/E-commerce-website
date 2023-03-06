@@ -15,7 +15,7 @@ const sessionSecret = process.env.sessionSecret
 
 
  const accountSid= "AC25205a5f6722a9a4135bd3b411db1db2";
- const authToken = "8f3ff97106e6aa9a3cc4945f06d047f1";
+ const authToken = "e02be30b708cca8c046eee643760e1df";
 const securepassword = async (password) => {
     try {
         const passwoedHash = await bcrypt.hash(password, 10);

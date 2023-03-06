@@ -296,13 +296,13 @@ const
             });
             console.log(updatedinfo);
             updatedinfo ? res.render('verify', {
-                login: false,
+                login: 0,
                 message: "otp resend please check your phone",
                 email: email,
                 mobile: mobile,
                 
             }) : res.render('verify', {
-                login: false,
+                login: 0,
                 message: "Something went wrong please try again",
                 email: email,
                 mobile: mobile,
@@ -311,7 +311,7 @@ const
         } catch (error) {
             console.log(error);
             res.render('verify', {
-                login: false,
+                login: 0,
                 message: "Can't sent OTP",
                 email: email,
                 mobile: mobile
