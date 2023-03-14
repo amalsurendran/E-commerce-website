@@ -19,10 +19,12 @@
 
                             <div class="thumbnail_images container ">
                                 <ul id="thumbnail " class="row"> 
-                                    <li class="col-sm"><img onclick="changeImage(this)" src="/productImages/{{product.image.[0]}}"
+                                    {{#each product.image}}
+                                    <li class="col-sm"><img onclick="changeImage(this)" src="/productImages/{{this}}"
                                             width="70">
                                     </li>
-                                    <li class="col-sm"><img onclick="changeImage(this)" src="/productImages/{{product.image.[1]}}"
+                                    {{/each}}
+                                    {{!-- <li class="col-sm"><img onclick="changeImage(this)" src="/productImages/{{product.image.[1]}}"
                                             width="70">
                                     </li>
                                     <li class="col-sm"><img onclick="changeImage(this)" src="/productImages/{{product.image.[2]}}"
@@ -30,7 +32,7 @@
                                     </li>
                                     <li class="col-sm"><img onclick="changeImage(this)" src="/productImages/{{product.image.[3]}}"
                                             width="70">
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </div>
                         </div>
