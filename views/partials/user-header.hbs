@@ -37,21 +37,9 @@
 						
 							<li class="nav-item active"><a class="nav-link" href="home">Home</a></li>
 							<li class="nav-item submenu dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+								<a href="shop-category" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
 									aria-haspopup="true" aria-expanded="false">Shop</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="shop-category">Shop Category</a></li>
-									{{!-- <li class="nav-item"><a class="nav-link" href="single-product.html">Product
-											--}}
-
-											{{!--
-									<li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a>
-									</li> --}}
-									{{!-- <li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a>
-									</li>
-									<li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a>
-									</li> --}}
-								</ul>
+							
 							</li>
 							<li class="nav-item submenu dropdown">
 								{{#if logged}}
@@ -61,15 +49,7 @@
 								{{/if}}
 
 							</li>
-							{{!-- <li class="nav-item submenu dropdown">
-								<a href="/logout" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-									aria-haspopup="true" aria-expanded="false">Pages</a> --}}
-								{{!-- <ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
-									<li class="nav-item"><a class="nav-link" href="tracking.html">Tracking</a></li>
-									<li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
-								</ul> --}}
-							{{!-- </li> --}}
+						
 							<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
 						</ul>
 						{{#if logged}}
@@ -80,25 +60,19 @@
 											class="fa-solid fa-user"></i></span></a>
 
 							</li>
-							{{!-- <li class="nav-item"><a href=""><span><i
-											class="fa-solid fa-magnifying-glass"></i></span></a>
-
-							</li> --}}
+						
 							<li class="nav-item"><a href="wishlist" class="cart"><span><i
 											class="fa-solid fa-heart"></i></span></a></li>
 						</ul>
 
 						{{else}}
-						<ul class="nav navbar-nav navbar-right">
+						<ul class="nav navbar-nav navbar-right dropdown">
 							<li class="nav-item"><a href="/login" class="cart"><span><i
 											class="fa-solid fa-cart-shopping"></i></span></a></li>
 							<li class="nav-item"><a href="/login"><span><i class="fa-solid fa-user"></i></span></a>
 
 							</li>
-							{{!-- <li class="nav-item"><a href=""><span><i
-											class="fa-solid fa-magnifying-glass"></i></span></a>
-
-							</li> --}}
+							
 							<li class="nav-item"><a href="wishlist" class="cart"><span><i
 											class="fa-solid fa-heart"></i></span></a></li>
 						</ul>
