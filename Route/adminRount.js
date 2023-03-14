@@ -62,8 +62,8 @@ admin_route.get('/dash-bord',auth.isLoginAdmin,adminController.dashboardData)
 admin_route.get('/coupon',auth.isLoginAdmin,adminController.loadcoupons)
 admin_route.get('/add-coupon',auth.isLoginAdmin,adminController.addCoupon)
 admin_route.post('/add-coupon',adminController.insertcoupon)
-admin_route.delete('/removeimage/:img/:id',adminController.deleteimage)
-admin_route.get('/sales-report',orderController.loadSales)
-// admin_route.post('/sales-report',adminController.salesReport)
+admin_route.delete('/removeimage/:img/:id',auth.isLoginAdmin,adminController.deleteimage)
+admin_route.get('/sales-report',auth.isLoginAdmin,adminController.salesReport)
+// admin_route.post('/filter',adminController.filteringOrder)
 
 module.exports = admin_route;

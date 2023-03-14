@@ -15,11 +15,9 @@ const loadCategory = async (req, res, next) => {
         console.log(error);
     }
 }
-
 const loadAddcategory = async (req, res, next) => {
     const categoryData = await Category.find({})
-    try {
-       
+    try {      
         res.render('add-category', { category:categoryData,
             adminlog: 1
         })
@@ -27,14 +25,10 @@ const loadAddcategory = async (req, res, next) => {
         console.log(error);
     }
 }
-
 const insertCategory = async (req, res, next) => {
-
-    try {
-        
+    try {      
         const categoryata = await Category.find({name:req.body.name})
-        if (categoryata) {
-            console.log(categoryata);
+        if (categoryata) {       
             res.render('add-category', {
                 // category:categoryata,
                 adminlog: 1,
@@ -42,10 +36,8 @@ const insertCategory = async (req, res, next) => {
             })
         } else {
             const category = new Category({
-                name: req.body.name,
-               
+                name: req.body.name,        
             });
-
             const categoryData = await category.save();
             res.redirect('/admin/category');
         }
@@ -53,9 +45,7 @@ const insertCategory = async (req, res, next) => {
         console.log(error);
     }
 }
-
 const editCategory = async (req, res, next) => {
-
     try {
         const id = req.query.id
         const categoryData = await Category.findById({
@@ -65,20 +55,15 @@ const editCategory = async (req, res, next) => {
             category: categoryData,
             adminlog: true
         });
-
     } catch (error) {
         console.log(error);
     }
 }
-
 const updateCategory = async (req, res, next) => {
-
     try {
-
         const categoryData = await Category.findOne({
             name:req.body.name
         })
-
         if (categoryData) {
             res.render('edit-category', {
                 category:categoryData,
@@ -94,14 +79,12 @@ const updateCategory = async (req, res, next) => {
                     name: name
                 }
             })
-
             res.redirect('/admin/category');
         }
     } catch (error) {
         console.log(error);
     }
 }
-
 const deleteCategory = async (req, res, next) => {
     try {
         const id = req.query.id;
@@ -115,7 +98,6 @@ const deleteCategory = async (req, res, next) => {
         console.log(error)
     }
 }
-
 const loadshopcategory = async(req,res)=>{
     try {
         const productData = await product.find({

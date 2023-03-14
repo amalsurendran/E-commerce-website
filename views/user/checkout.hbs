@@ -14,7 +14,6 @@
                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 sm-margin-30px-bottom">
                                                 <div class="create-ac-content bg-light-gray padding-20px-all">
                                                     <br><br>
-
                                                     <h2>Deliver to:</h2>
                                                     <br>
                                                     <div class="row">
@@ -110,9 +109,10 @@
                                                             </table>
                                                         </div>
                                                     </div>
-                                                    <div><li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                                    <div>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                             Offer
-                            <h3 id="offer" class="fw-normal">{{offer}} %</h3>
+                            <h3 id="offer" class="fw-normal">{{offer}} % </h3>
                         </li>
 
                         <li
@@ -257,7 +257,7 @@
                             data: JSON.stringify({ response }),
                         };
                         console.log(response)
-                        $.ajax(settings).done(function (response) {
+                        $.ajax(settings).done(function (response){
                             placeOrder();
                             alert(JSON.stringify(response));
                         });
@@ -368,7 +368,6 @@
             body: JSON.stringify({ code: coupon ,total:total}),
         });
         let response = await valCoupon.json()
-console.log(response.gtotal)
         if (response == "fail") {
             document.getElementById("errorMessage").innerHTML = "Coupon Invalid";
 

@@ -44,8 +44,6 @@ app.use(session({
     }
 }));
 
-
-
 app.use(auth.cache)
 
 

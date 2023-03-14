@@ -13,9 +13,7 @@ const {
     render
 } = require('../Route/adminRount');
 const client = require("twilio")(config.accountSid, config.authToken);
-
 let logged = false;
-
 
 function generateOTP() {
     return Math.floor(100000 + Math.random() * 900000);
@@ -23,11 +21,8 @@ function generateOTP() {
 const OTP = generateOTP();
 
 const otpsending = async function sendotp(mobile) {
-
-
     try {
         const check = await generateOTP();
-
         client.messages.create({
                 body: OTP,
                 to: mobile,
@@ -35,24 +30,17 @@ const otpsending = async function sendotp(mobile) {
             }).then(message => console.log(message))
             // here you can implement your fallback code
             .catch(error => console.log(error))
-
     } catch (error) {
         console.log(error);
-
-
     }
-
 }
-const loadhome = async (req, res, next) => {
-    
+const loadhome = async (req, res, next) => {  
     try {
         const bannerData = await banner.find({});
         const categoryData = await Category.find({})
-
         const productData = await product.find({
             soft_delete: false
         });
-
         if (req.session.user_id) {
             res.render('home', {
                 product: productData,
@@ -68,10 +56,8 @@ const loadhome = async (req, res, next) => {
                 category: categoryData,
             })
         }
-
     } catch (error) {
         next(error)
-
     }
 }
 const loginLoad = async (req, res, next) => {
@@ -96,19 +82,14 @@ const insertUser = async (req, res, next) => {
     const checkUser = await user.findOne({
         email: req.body.email
     })
-    console.log(checkUser);
     const mob = await user.findOne({
         mobile: req.body.mobile
     })
-    console.log(mob);
     try {
         const secPassword = await config.securepassword(req.body.password)
-
-        if (!checkUser) {
-            console.log('no users found');
+        if (!checkUser) {          
             if (!mob) {
-                console.log('no mobile ');
-                const User = new user({
+                  const User = new user({
                     name: req.body.name,
                     email: req.body.email,
                     mobile: req.body.mobile,
@@ -116,18 +97,15 @@ const insertUser = async (req, res, next) => {
                     is_verified: 0,
                     token: OTP
                 })
-                if (req.body.password === req.body.conpassword) {
-                    console.log("password check");
+                if (req.body.password === req.body.conpassword) {                  
                     const userData = await User.save();
                     if (userData) {
-
                         otpsending(req.body.mobile);
                         res.render('verify', {
                             login: false,
                             message: "your registration is  completed. please enter otp and verify your account",
                             email: userData.email,
                             mobile: req.body.mobile
-
                         })
                     } else {
                         res.render('signup', {
@@ -148,32 +126,25 @@ const insertUser = async (req, res, next) => {
                 error: " Email or mobile already taken"
             })
         }
-
     } catch (error) {
         next(error)
     }
 }
-const loadverify = async (req, res, next) => {
-    
-    try {
-    
+const loadverify = async (req, res, next) => {   
+    try {  
         res.render('verify', {
             logged: true
-        })
-        
+        })     
     } catch (error) {
         console.log(error);
     }
 }
-const otpverify = async (req, res, next) => {
-   
-    try {
-       
+const otpverify = async (req, res, next) => { 
+    try {   
         const checkUser = await user.findOne({
             email: req.body.email
         })
         const enterotp = await req.body.otp;
-
         if (enterotp == checkUser.token) {
             const updatedinfo = await user.updateOne({
                 email: req.body.email
@@ -185,7 +156,6 @@ const otpverify = async (req, res, next) => {
             res.render('login', {
                 login: false
             });
-
         } else {
             res.render('verify', {
                 login: false,
@@ -198,9 +168,7 @@ const otpverify = async (req, res, next) => {
     }
 }
 const verifyLogin = async (req, res, next) => {
-
-    try {
-        
+    try {       
         const productData = await product.find({})
         const email = req.body.email;
         const password = req.body.password;
@@ -211,12 +179,10 @@ const verifyLogin = async (req, res, next) => {
             const passwordMatch = await bcrypt.compare(password, userData.password);
             if (passwordMatch) {
                 if (!userData.is_verified) {
-
                     res.render('login', {
                         login: false,
                         error: "please verify your mail.",
                     })
-
                 } else {
                     if (userData.blocked) {
                         res.render('login', {
@@ -227,7 +193,6 @@ const verifyLogin = async (req, res, next) => {
                         logged = true;
                         req.session.user_id = userData._id
                         res.redirect('/')
-
                     }
                 }
             } else {
@@ -236,18 +201,15 @@ const verifyLogin = async (req, res, next) => {
                     error: "email and  password is incorrect "
                 })
             }
-
         } else {
             res.render('login', {
                 login: false,
                 error: "email and  password is incorrect "
             })
         }
-
     } catch (error) {
         console.log(error)
     }
-
 }
 const otpredsend = async (req, res, next) => {
     try {
@@ -260,15 +222,12 @@ const otpredsend = async (req, res, next) => {
     }
 }
 const loadresend = async (req, res, next) => {
-
     try {
         res.render('resend', {
             login: false
         })
     } catch (error) {
-
     }
-
 }
 const
     resendotp = async (req, res, next) => {
@@ -276,9 +235,7 @@ const
             const {
                 email,
                 mobile
-            } = req.params
-           
-           
+            } = req.params           
             const OTP = generateOTP()
             client.messages.create({
                     body: OTP,
@@ -293,20 +250,17 @@ const
 
                     token: OTP
                 }
-            });
-            console.log(updatedinfo);
+            });          
             updatedinfo ? res.render('verify', {
                 login: 0,
                 message: "otp resend please check your phone",
                 email: email,
-                mobile: mobile,
-                
+                mobile: mobile,          
             }) : res.render('verify', {
                 login: 0,
                 message: "Something went wrong please try again",
                 email: email,
-                mobile: mobile,
-                
+                mobile: mobile,           
             })
         } catch (error) {
             console.log(error);
@@ -319,7 +273,6 @@ const
         }
     }
 const loadSend = async (req, res, next) => {
-
     try {
         const userdata = await user.find()
         res.render('resend', {
@@ -328,11 +281,9 @@ const loadSend = async (req, res, next) => {
     } catch (error) {
         console.log(error);
     }
-
 }
 const productview = async (req, res, next) => {
     try {
-
         if (req.session.user_id) {
             const id = req.query.id
             const productData = await product.findById({
@@ -341,7 +292,6 @@ const productview = async (req, res, next) => {
             res.render('productview', {
                 product: productData,
                 logged: 1
-
             });
         } else {
             const id = req.query.id
@@ -354,11 +304,9 @@ const productview = async (req, res, next) => {
 
             });
         }
-
     } catch (error) {
         console.log(error)
     }
-
 }
 const userLogout = async (req, res) => {
     try {
@@ -369,11 +317,8 @@ const userLogout = async (req, res) => {
         console.log(error);
     }
 }
-
 const LoadUserprofile = async (req, res, next) => {
-
     try {
-
         const userData = await user.findOne({
             _id: req.session.user_id
         }).lean();
@@ -382,14 +327,11 @@ const LoadUserprofile = async (req, res, next) => {
             user: userData,
             address: userData.Address
         })
-        console.log(userData[0].Address);
+        
     } catch (error) {
         console.log(error);
     }
-
 }
-
-
 const loadAddress = async (req, res, next) => {
     try {
         const userData = await
@@ -400,10 +342,6 @@ const loadAddress = async (req, res, next) => {
         console.log(error);
     }
 }
-
-
-
-
 const loadPasswordchange = async (req, res, next) => {
     try {
         res.render('passwordchange', {
@@ -412,19 +350,14 @@ const loadPasswordchange = async (req, res, next) => {
     } catch (error) {
 
     }
-
 }
-
 const changePassword = async (req, res, next) => {
     try {
-
         const userData = await user.findOne({
             _id: req.session.user_id
         })
         const password = await req.body.password
-
         const passwordMatch = await bcrypt.compare(password, userData.password);
-
         if (passwordMatch) {
             const secPassword = await config.securepassword(req.body.npassword)
             const updatedinfo = await user.updateOne({
@@ -434,20 +367,14 @@ const changePassword = async (req, res, next) => {
                     password: secPassword
                 }
             });
-
             res.redirect('/userprofile')
-
         }
     } catch (error) {
         console.log(error);
     }
-
 }
-
-
 const updateProfile = async (req, res) => {
     try {
-
         const userData = await user.updateOne({
             _id: req.session.user_id
         }, {
@@ -462,7 +389,6 @@ const updateProfile = async (req, res) => {
         console.log(error);
     }
 }
-
 const addAddress = async (req, res) => {
     try {
         const address = await user.findByIdAndUpdate({
@@ -477,7 +403,6 @@ const addAddress = async (req, res) => {
         console.log(error);
     }
 }
-
 const deleteAddress = async (req, res) => {
     try {
         const id = req.query.id;
@@ -495,7 +420,6 @@ const deleteAddress = async (req, res) => {
         console.log(error);
     }
 }
-
 const loadforgetpassword = async (req, res) => {
     try {
 
@@ -504,7 +428,6 @@ const loadforgetpassword = async (req, res) => {
         console.log(error);
     }
 }
-
 const load404 = async (req, res) => {
     try {
         res.render('404')
@@ -512,7 +435,6 @@ const load404 = async (req, res) => {
         console.log(error);
     }
 }
-
 const loadReset =async(req,res)=>{
     try {
        res.render('resetpassword') 
@@ -522,14 +444,10 @@ const loadReset =async(req,res)=>{
 }
  const forget = async (req, res, next) => {
     try {
-       
-
         const mob = req.body.mobile
-        console.log(mob);
         const userdata = await user.findOne({
             mobile: mob
-        })
-        console.log(userdata,"userotp");
+        })   
         const OTP = generateOTP()
         client.messages.create({
                 body: OTP,
@@ -544,9 +462,7 @@ const loadReset =async(req,res)=>{
 
                 token: OTP
             }
-        });
-        console.log(OTP,"amal");
-        console.log(updatedinfo);
+        });     
         updatedinfo ? res.render('forgetVerify', {
             login: false,
             message: "otp resend please check your phone",
@@ -570,27 +486,18 @@ const loadReset =async(req,res)=>{
         })
     }
 }
-
 const loadFogetverify = async(req,res)=>{
     try {
         res.render('forgetVerify')
-    } catch (error) {
-        
+    } catch (error) {    
     }
 }
-
-const forgetotp = async (req, res, next) => {
-   
-    try {
-       
+const forgetotp = async (req, res, next) => { 
+    try {      
         const checkUser = await user.findOne({
             email: req.body.email
-        })
-        
+        })      
         const enterotp = await req.body.otp;
-        console.log(req.body.otp);
-        console.log(checkUser);
-
         if (enterotp == checkUser.token) {
             const updatedinfo = await user.updateOne({
                 email: req.body.email
@@ -614,14 +521,11 @@ const forgetotp = async (req, res, next) => {
         console.log(error);
     }
 }
-
 const  resetPassword = async (req, res) => {
-
     try {
         const password = req.body.password;
         const conpassword = req.body.conpassword;
-        const secure_Password = await config.securepassword(password);
-            console.log(req.body.email,'email');
+        const secure_Password = await config.securepassword(password);        
         if (password === conpassword) {
             const updatedData = await user.findOneAndUpdate({ email:req.body.email }, { $set:{ password:secure_Password} });
             res.redirect('/login');
@@ -631,9 +535,7 @@ const  resetPassword = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-
 }
-
 const searchedData = async (req, res) => {
     try {
         const data = await product.find({ name: { $regex: req.body.text } });
@@ -646,8 +548,6 @@ const searchedData = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-
-
 }
 
 

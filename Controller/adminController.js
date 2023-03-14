@@ -7,10 +7,10 @@ const product = require('../Models/productModel');
 const Coupon = require('../Models/couponModel')
 const moment = require('moment')
 
+let filter = false;
 
 const loadLogin = async (req, res, next) => {
     try {
-
         if (req.session.admin_id) {
             res.redirect('/admin/admin-home')
         } else {
@@ -18,7 +18,6 @@ const loadLogin = async (req, res, next) => {
                 adminlog: false
             })
         }
-
     } catch (error) {
         console.log(error);
     }
@@ -26,11 +25,9 @@ const loadLogin = async (req, res, next) => {
 const loadHome = async (req, res, next) => {
     try {
         const email = req.body.email;
-
         const checkAdmin = await admin.findOne({
             email: email
         });
-
         const orderdata = await Order.find({}).sort({
             _id: -1
         }).lean()
@@ -39,9 +36,6 @@ const loadHome = async (req, res, next) => {
             orderdata: orderdata,
             checkAdmin
         })
-
-
-
     } catch (error) {
         console.log(error);
     }
@@ -56,8 +50,6 @@ const AdminverifyLogin = async (req, res, next) => {
         const checkAdmin = await admin.findOne({
             email: email
         });
-
-
         if (checkAdmin) {
             const passwordMatch = await bcrypt.compare(password, checkAdmin.password);
             if (passwordMatch) {
@@ -68,7 +60,6 @@ const AdminverifyLogin = async (req, res, next) => {
                     adminlog: false,
                     error: "Email and password is incorrect "
                 });
-
             }
         } else {
             res.render('adminlog', {
@@ -76,10 +67,7 @@ const AdminverifyLogin = async (req, res, next) => {
                 error: "Email and password is incorrect "
             });
         }
-
-
     } catch (error) {
-
         console.log(error)
     }
 }
@@ -93,25 +81,19 @@ const loadsignup = async (req, res, next) => {
     }
 }
 const signupAdmin = async (req, res, next) => {
-
     const checkUser = await admin.find({
         email: req.body.email
     })
     try {
         const secPassword = await config.securepassword(req.body.password)
-
         if (checkUser == '') {
             const Admin = new admin({
                 name: req.body.name,
                 email: req.body.email,
                 password: secPassword,
-
             })
-
             const adminData = Admin.save()
-
             if (adminData) {
-
                 res.render('adminlog', {
                     adminlog: false,
                     message: "your registration is  completed."
@@ -142,14 +124,13 @@ const loaduser = async (req, res, next) => {
     } catch (error) {
         console.log(error);
     }
-
 }
 const loadLogout = async (req, res, next) => {
     try {
         req.session.destroy();
         res.redirect('/admin');
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
     }
 }
 const blockUser = async (req, res, next) => {
@@ -166,10 +147,8 @@ const blockUser = async (req, res, next) => {
     } catch (error) {
         console.log(error);
     }
-
 }
 const unBlockUser = async (req, res) => {
-
     try {
         const id = req.query.id
         const userData = await user.findOneAndUpdate({
@@ -184,14 +163,11 @@ const unBlockUser = async (req, res) => {
         console.log(error)
     }
 }
-
 const loadOrder = async (req, res) => {
     try {
-
         const orderData = await Order.find({}).sort({
             _id: -1
         })
-
         res.render("orders", {
             orders: orderData,
             adminlog: 1
@@ -200,11 +176,8 @@ const loadOrder = async (req, res) => {
         console.log(error);
     }
 };
-
-
 const dashboardData = async (req, res, next) => {
     try {
-
         const totalDeliveredsum = await Order.aggregate([{
             $match: {
                 status: 'Delivered'
@@ -241,7 +214,6 @@ const dashboardData = async (req, res, next) => {
                 }
             }
         }])
-
         const Cancelorder = await Order.aggregate([{
             $match: {
                 $or: [{
@@ -265,7 +237,6 @@ const dashboardData = async (req, res, next) => {
                 }
             }
         }])
-
         let months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         let Delivered = []
         let delivered = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -273,7 +244,6 @@ const dashboardData = async (req, res, next) => {
         let returned = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         let Cancelled = []
         let cancelled = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
         Cancelorder.forEach((item) => {
             if (item._id.status == 'Delivered')
                 Delivered.push(item)
@@ -283,10 +253,7 @@ const dashboardData = async (req, res, next) => {
 
             if (item._id.status == 'Cancelled')
                 Cancelled.push(item)
-
         })
-
-
         for (let index = 0; index < 12; index++) {
             months.forEach((item) => {
                 if (Delivered[index]) {
@@ -305,7 +272,6 @@ const dashboardData = async (req, res, next) => {
                 }
             })
         }
-
         res.json({
             pie: Piechart,
             revenue: totalDeliveredsum,
@@ -316,12 +282,10 @@ const dashboardData = async (req, res, next) => {
             }
         })
     } catch (error) {
-        console.log(error);
+       
         next(error)
     }
 }
-
-
 const loadcoupons = async (req, res) => {
     try {
         const couponData = await Coupon.find()
@@ -334,7 +298,6 @@ const loadcoupons = async (req, res) => {
         console.log(error);
     }
 }
-
 //add new coupon
 const addCoupon = async (req, res) => {
     try {
@@ -345,7 +308,6 @@ const addCoupon = async (req, res) => {
         console.log(error);
     }
 }
-
 const insertcoupon = async (req, res) => {
     try {
         const coupon = new Coupon({
@@ -365,76 +327,103 @@ const insertcoupon = async (req, res) => {
         console.log(error);
     }
 }
-
-
 const deleteimage = async (req, res) => {
-
     try {
-        
         const {
             img,
             id
         } = req.params
         const result = await product.updateOne({
-            _id:id
+            _id: id
         }, {
             $pull: {
-                image :img
+                image: img
             }
-
         });
-        if(result){ res.json("success")}
-        else{
+        if (result) {
+            res.json("success")
+        } else {
             res.json('error')
         }
-       
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+const salesReport = async (req, res) => {
+    try {
+        const orderdata = await Order.aggregate([{
+                $match: {
+                    status: "Delivered"
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalSales: {
+                        $sum: "$subtotal"
+                    }
+
+                },
+
+            },
+            {
+                $sort: {
+                    _id: 1
+                }
+            }
+        ]);
+
+        if (!filter) {
+            orderdataFilter = await Order.find({
+                status: "Delivered"
+            })
+        }
+        const totalSales = orderdata.length > 0 ? orderdata[0].totalSales : 0;
+        res.render('sales', {
+            adminlog: 1,
+            orderdata: orderdataFilter,
+            totalSales: totalSales
+        });
+
     } catch (error) {
         console.log(error);
     }
 }
 
-// const salesReport = async (req, res, next) => {
-    
+// const filteringOrder = async (req, res) => {
 //     try {
-//         console.log("amal");
-//       let { fromdate, todate } = req?.query ?? {};
-//       let salesReport;
-//       let total = 0;
-      
-//       if (fromdate && todate) {
-//         fromdate = new Date(fromdate);
-//         todate = new Date(todate);
-  
-//         if (req?.query?.fromdate == req?.query?.todate && todate && fromdate)
-//           todate.setDate(todate.getDate() + 1);
-  
-//         salesReport = await Order.find({
-//           date: { $gte: fromdate, $lt: todate },
-//         }).lean();
-//         console.log(salesReport);
-//         salesReport.forEach((item) => {
-//           item.date = moment(item.date).format("DD-MM-YYYY");
-//           total = total + item.total_amount;
-//         });
-//       } else {
-//         salesReport = await Order.find({}).limit(10).lean();
-//         salesReport.forEach((item) => {
-//           item.date = moment(item.date).format("DD-MM-YYYY");
-//           total = total + item.total_amount;
-//         });
-//       }
-//      console.log(salesReport,total,req.query.fromdate,req.query.todate,'426---')
-     
-//       res.render("sales", {
-//         salesReport:salesReport,
-//         total: total,
-//         fromDate: req.query.fromdate,
-//         toDate: req.query.todate,
-//       });
+//         const reqDate = req.body.fromDate
+//         const toDate = req.body.toDate
+
+
+//         orderdataFilter = await Order.find(
+//             // {$or:[{
+//             {
+//                 $and: [
+//                     {
+//                         delivery_date: {
+//                             $gt: reqDate,
+//                         }
+//                     },
+//                     {
+//                         delivery_date: {
+//                             $lt: toDate,
+//                         }
+//                     }]
+//             });
+
+//         console.log(reqDate, toDate);
+//         console.log(orderdataFilter);
+
+//         filter = true;
+//         res.redirect('/admin/sales-report');
 //     } catch (error) {
-//       console.log(error);
-//   }
-//   };
+//         console.log(error);
+//     }
+// }
+
+
 
 
 
@@ -454,6 +443,7 @@ module.exports = {
     addCoupon,
     insertcoupon,
     deleteimage,
-    // salesReport
+    salesReport,
+    // filteringOrder
 
 }

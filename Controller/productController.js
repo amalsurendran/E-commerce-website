@@ -6,7 +6,6 @@ const {
 
 
 const loadProduct = async (req, res, next) => {
-
     try {
         const productDat = await product.aggregate([{
             $lookup: {
@@ -16,26 +15,20 @@ const loadProduct = async (req, res, next) => {
                 as: "products",
             },
         }, ]);
-
-
         const products = productDat.filter((val) => {
             if (val.soft_delete == false) {
                 return true
             }
-
         })
         res.render('product', {
             adminlog: true,
             product: products
         });
-
     } catch (error) {
         next(error);
     }
 }
-
 const productAdd = async (req, res, next) => {
-
     try {
         const categoryData = await Category.find({});
         res.render('add-product', {
@@ -46,11 +39,8 @@ const productAdd = async (req, res, next) => {
         console.log(error);
     }
 }
-
 const productinsert = async (req, res, next) => {
-
     try {
-
         const categorydata = await Category.find({})
         const images = req.files.map((file) => {
             return file.filename
@@ -64,7 +54,6 @@ const productinsert = async (req, res, next) => {
             quantity: req.body.quantity,
             image: images
         });
-
         const productData = await Product.save();
         const allp = await product.find({
             soft_delete: false
@@ -84,18 +73,14 @@ const productinsert = async (req, res, next) => {
     } catch (error) {
         console.log(error);
     }
-
 }
-
 const updateProduct = async (req, res, next) => {
     try {
         const images = req.files.map((file) => {
             return file.filename
         })
-        
         const id = req.body.id
         if (images) {
-           
             const productData = await product.findOneAndUpdate({
                 _id: id
             }, {
@@ -104,13 +89,13 @@ const updateProduct = async (req, res, next) => {
                     category: req.body.category,
                     price: req.body.price,
                     description: req.body.description,
-                    // image:images,
                     quantity: req.body.quantity
                 },
                 $push: {
-                    image:  images ? images :[],
-                  },
-        
+                    image: {
+                        $each: images ?? []
+                    }
+                },
             });
         } else {
             const productData = await product.findByIdAndUpdate({
@@ -125,13 +110,11 @@ const updateProduct = async (req, res, next) => {
                 }
             });
         }
-
         res.redirect('/admin/product');
     } catch (error) {
         console.log(error);
     }
 }
-
 const loadEditproduct = async (req, res, next) => {
     try {
         const id = req.query.id
@@ -149,10 +132,7 @@ const loadEditproduct = async (req, res, next) => {
     } catch (error) {
         console.log(error)
     }
-
-
 }
-
 const deleteProduct = async (req, res, next) => {
     try {
         const id = req.query.id;
@@ -166,8 +146,6 @@ const deleteProduct = async (req, res, next) => {
         console.log(error)
     }
 }
-
-
 module.exports = {
     loadProduct,
     productAdd,

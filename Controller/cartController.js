@@ -35,7 +35,6 @@ const loadCart = async (req, res) => {
                 }
             }
         ]);
-
         const productDat = await product.aggregate([{
             $lookup: {
                 from: "categories",
@@ -44,19 +43,14 @@ const loadCart = async (req, res) => {
                 as: "products",
             },
         }, ]);
-
-
         const cartProducts = cartData[0].productcartData
         let subtotal = 0;
         cartProducts.forEach((cartProduct) => {
             subtotal = subtotal + Number(cartProduct.price);
         });
-
         const length = cartProducts.length
-
-
         res.render('cart', {
-            loggedd: 1,
+            logged: 1,
             cartProducts,
             subtotal,
             length
@@ -65,7 +59,6 @@ const loadCart = async (req, res) => {
         console.log(error);
     }
 }
-
 const addToCart = async (req, res) => {
     try {
         const cartData = await user.updateOne({
@@ -77,14 +70,11 @@ const addToCart = async (req, res) => {
                 }
             }
         });
-
         res.redirect('/home');
     } catch (error) {
         console.log(error);
     }
 }
-
-
 const removeCartProduct = async (req, res) => {
     try {
         const result = await user.findByIdAndUpdate({
@@ -101,7 +91,6 @@ const removeCartProduct = async (req, res) => {
         console.log(error);
     }
 }
-
 const loadcart = async (req, res) => {
     try {
         res.render('checkoutAddress', {
@@ -111,11 +100,8 @@ const loadcart = async (req, res) => {
         console.log(error);
     }
 }
-
-
 let total
 const checkOut = async (req, res) => {
-
     try {
         const address = await user.find({
             _id: req.session.user_id
@@ -144,7 +130,6 @@ const checkOut = async (req, res) => {
             },
         ]);
         let subtotal = 0;
-        
         const cartProducts = cartData[0].Cartproducts;
         cartProducts.map((cartProduct, i) => {
             cartProduct.quantity = req.body.quantity[i];
@@ -154,14 +139,15 @@ const checkOut = async (req, res) => {
             productDetails: cartData[0].Cartproducts,
             subtotal: subtotal,
             address: address[0].Address,
-            loggedd: 1,total:subtotal,offer:0
+            logged: 1,
+            total: subtotal,
+            offer: 0
         });
     } catch (error) {
         console.log(error);
     }
 
 }
-
 const checkoutAddress = async (req, res) => {
     try {
         const address = await user.findByIdAndUpdate({
@@ -178,12 +164,8 @@ const checkoutAddress = async (req, res) => {
 }
 let couponCode
 let couponamount
-
-
 const placeOrder = async (req, res) => {
-
     try {
-                
         const {
             productid,
             productname,
@@ -203,19 +185,18 @@ const placeOrder = async (req, res) => {
             name: productname[i],
             price: price[i],
             quantity: quantity[i]
-
         }));
-
-        if(req.body.coupon){
-            
+        if (req.body.coupon) {
             couponCode = req.body.coupon;
-            const applied = await Coupon.findOne({code:req.body.coupon})
+            const applied = await Coupon.findOne({
+                code: req.body.coupon
+            })
             couponamount = applied.percentage
-            if(couponamount){
-                const amount =(subtotal*couponamount)/100
+            if (couponamount) {
+                const amount = (subtotal * couponamount) / 100
                 total = subtotal - amount
-            }else{
-                total= subtotal
+            } else {
+                total = subtotal
             }
         }
         let data = {
@@ -226,10 +207,8 @@ const placeOrder = async (req, res) => {
             product: lensproduct,
             status: "processing",
             payment_method: String(payment),
-            subtotal:total 
+            subtotal: total
         };
-         console.log();
-            
         const orderPlacement = await Order.insertMany(data);
         const clearCart = await user.updateOne({
             _id: req.session.user_id
@@ -247,7 +226,6 @@ const placeOrder = async (req, res) => {
                 }
             })
         })
-
         if (orderPlacement && clearCart) {
             req.session.page = 'fghnjm'
             res.json({
