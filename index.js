@@ -1,14 +1,14 @@
 const express = require("express");
-const hbs = require('express-handlebars')
+const hbs = require('express-handlebars');
 const app = express();
-const path = require('path')
-const connectDb = require("./config/config")
-const userRoute = require('./Route/userRoute')
-const adminRoute = require('./Route/adminRount')
+const path = require('path');
+const connectDb = require("./config/config");
+const userRoute = require('./Route/userRoute');
+const adminRoute = require('./Route/adminRount');
 const session = require('express-session');
 const { notFound, errorHandler } = require("./middeleware/errorhandler");
-const auth = require('./middeleware/Auth')
-const Handlebars =require('handlebars') 
+const auth = require('./middeleware/Auth');
+const Handlebars =require('handlebars');
 
 connectDb.Db();
 
@@ -31,7 +31,7 @@ app.engine('hbs', hbs.engine({
         allowProtoPropertiesByDefault: true,
         allowProtoMethodsByDefault: true,
     },
-    layoutsDir: __dirname + '/views/layout/',
+    layoutsDir:__dirname + '/views/layout/',
     partialsDir: __dirname + '/views/partials'
 }))
 app.use(session({
@@ -44,7 +44,7 @@ app.use(session({
     }
 }));
 
-app.use(auth.cache)
+app.use(auth.cache);
 
 
 Handlebars.registerHelper('ifeq', function (a, b, options) {

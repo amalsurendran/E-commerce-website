@@ -31,5 +31,9 @@
     "razorpay": "^2.8.4",
     "sweetalert": "^2.1.2",
     "twilio": "^2.5.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.36.0",
+    "eslint-plugin-react": "^7.32.2"
   }
 }

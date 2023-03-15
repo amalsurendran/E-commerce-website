@@ -8,7 +8,7 @@ const {
 const Order = require('../Models/orderModel')
 const product = require('../Models/productModel');
 const razorpay = require('razorpay')
-const moment = require('moment')
+// const moment = require('moment')
 const Coupon = require('../Models/couponModel')
 const loadCart = async (req, res,next) => {
 
@@ -91,7 +91,7 @@ const removeCartProduct = async (req, res,next) => {
         next(error);
     }
 }
-const loadcart = async (req, res) => {
+const loadcart = async (req, res,next) => {
     try {
         res.render('checkoutAddress', {
             checknav: 1
@@ -233,9 +233,9 @@ const placeOrder = async (req, res,next) => {
                 data: data
             })
         } else {
-            const handlePlacementissue = await Order.deleteMany({
-                orderId: orderId,
-            });
+            // const handlePlacementissue = await Order.deleteMany({
+            //     orderId: orderId,
+            // });
             res.json("try again")
         }
     } catch (error) {

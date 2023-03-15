@@ -42,9 +42,9 @@ const loadHome = async (req, res, next) => {
 }
 const AdminverifyLogin = async (req, res, next) => {
     try {
-        const orderdata = await Order.find({}).sort({
-            _id: -1
-        }).lean()
+        // const orderdata = await Order.find({}).sort({
+        //     _id: -1
+        // }).lean()
         const email = req.body.email;
         const password = req.body.password;
         const checkAdmin = await admin.findOne({
@@ -168,8 +168,9 @@ const loadOrder = async (req, res,next) => {
         const orderData = await Order.find({}).sort({
             _id: -1
         })
+        const date = moment(orderData.date).format("MMMM Do YYYY, h:mm a");
         res.render("orders", {
-            orders: orderData,
+            orders: orderData, orderdate:date,
             adminlog: 1
         });
     } catch (error) {
@@ -337,7 +338,7 @@ const deleteimage = async (req, res ,next) => {
             _id: id
         }, {
             $pull: {
-                image: img
+                image:img
             }
         });
         if (result) {
@@ -375,15 +376,19 @@ const salesReport = async (req, res,next) => {
         ]);
 
         if (!filter) {
-            orderdataFilter = await Order.find({
+         const orderdataFilter = await Order.find({
                 status: "Delivered"
             })
         }
+        const products = orderdata.product;
+        const date = moment(orderdata.date).format("MMMM Do YYYY, h:mm a");
         const totalSales = orderdata.length > 0 ? orderdata[0].totalSales : 0;
         res.render('sales', {
             adminlog: 1,
             orderdata: orderdataFilter,
-            totalSales: totalSales
+            totalSales: totalSales,
+            orderdate:date,
+            product:products
         });
 
     } catch (error) {

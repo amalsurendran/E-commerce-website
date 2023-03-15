@@ -167,7 +167,7 @@ const successorder = async (req, res, next) => {
         }
 
     } catch (error) {
-
+        next(error)
     }
 }
 let offerPrice

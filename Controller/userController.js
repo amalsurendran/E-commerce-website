@@ -20,7 +20,7 @@ function generateOTP() {
 }
 const OTP = generateOTP();
 
-const otpsending = async function sendotp(mobile) {
+const otpsending = async function sendotp(mobile,next) {
     try {
         const check = await generateOTP();
         client.messages.create({
@@ -169,7 +169,7 @@ const otpverify = async (req, res, next) => {
 }
 const verifyLogin = async (req, res, next) => {
     try {       
-        const productData = await product.find({})
+        // const productData = await product.find({})
         const email = req.body.email;
         const password = req.body.password;
         const userData = await user.findOne({
@@ -227,6 +227,7 @@ const loadresend = async (req, res, next) => {
             login: false
         })
     } catch (error) {
+        next(error)
     }
 }
 const
@@ -267,14 +268,13 @@ const
             res.render('verify', {
                 login: 0,
                 message: "Can't sent OTP",
-                email: email,
-                mobile: mobile
+                
             })
         }
     }
 const loadSend = async (req, res, next) => {
     try {
-        const userdata = await user.find()
+        // const userdata = await user.find()
         res.render('resend', {
             login: false
         })
@@ -308,7 +308,7 @@ const productview = async (req, res, next) => {
         next(error)
     }
 }
-const userLogout = async (req, res) => {
+const userLogout = async (req, res,next) => {
     try {
         logged = false
         req.session.destroy()
@@ -334,7 +334,7 @@ const LoadUserprofile = async (req, res, next) => {
 }
 const loadAddress = async (req, res, next) => {
     try {
-        const userData = await
+        
         res.render('address', {
             logged: 1
         })
@@ -348,7 +348,7 @@ const loadPasswordchange = async (req, res, next) => {
             logged: 1
         })
     } catch (error) {
-
+        next(error)
     }
 }
 const changePassword = async (req, res, next) => {
@@ -373,7 +373,7 @@ const changePassword = async (req, res, next) => {
         next(error);
     }
 }
-const updateProfile = async (req, res) => {
+const updateProfile = async (req, res,next) => {
     try {
         const userData = await user.updateOne({
             _id: req.session.user_id
@@ -389,7 +389,7 @@ const updateProfile = async (req, res) => {
         next(error);
     }
 }
-const addAddress = async (req, res) => {
+const addAddress = async (req, res,next) => {
     try {
         const address = await user.findByIdAndUpdate({
             _id: req.session.user_id
@@ -403,7 +403,7 @@ const addAddress = async (req, res) => {
         next(error);
     }
 }
-const deleteAddress = async (req, res) => {
+const deleteAddress = async (req, res,next) => {
     try {
         const id = req.query.id;
         const userData = await user.findByIdAndUpdate({
@@ -420,7 +420,7 @@ const deleteAddress = async (req, res) => {
         next(error);
     }
 }
-const loadforgetpassword = async (req, res) => {
+const loadforgetpassword = async (req, res,next) => {
     try {
 
         res.render('forgetpassword')
@@ -428,18 +428,18 @@ const loadforgetpassword = async (req, res) => {
         next(error);
     }
 }
-const load404 = async (req, res) => {
+const load404 = async (req, res,next) => {
     try {
         res.render('404')
     } catch (error) {
         next(error);
     }
 }
-const loadReset =async(req,res)=>{
+const loadReset =async(req,res,next)=>{
     try {
        res.render('resetpassword') 
     } catch (error) {
-        
+        next(error)
     }
 }
  const forget = async (req, res, next) => {
@@ -481,15 +481,15 @@ const loadReset =async(req,res)=>{
         res.render('forgetVerify', {
             login: false,
             message: "Can't sent OTP",
-            email: email,
-            mobile: mobile
+            
         })
     }
 }
-const loadFogetverify = async(req,res)=>{
+const loadFogetverify = async(req,res,next)=>{
     try {
         res.render('forgetVerify')
     } catch (error) {    
+        next(error)
     }
 }
 const forgetotp = async (req, res, next) => { 
@@ -521,7 +521,7 @@ const forgetotp = async (req, res, next) => {
         next(error);
     }
 }
-const  resetPassword = async (req, res) => {
+const  resetPassword = async (req, res,next) => {
     try {
         const password = req.body.password;
         const conpassword = req.body.conpassword;
@@ -536,7 +536,7 @@ const  resetPassword = async (req, res) => {
         next(error);
     }
 }
-const searchedData = async (req, res) => {
+const searchedData = async (req, res,next) => {
     try {
         const data = await product.find({ name: { $regex: req.body.text } });
         const length = data.length

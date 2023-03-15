@@ -31,6 +31,7 @@
                                         <th>Delivered Date</th>
                                         <th>payment Method</th>
                                         <th>Order Price</th>
+                                        <th>product</th>
                                     </tr>
                                 </thead>
 
@@ -39,7 +40,7 @@
                                     {{#each orderdata}}
                                     <tr>
                                         <td>{{this.orderId}}</td>
-                                        <td>{{this.date}}</td>
+                                        <td>{{../orderdate}}</td>
                                         
                                         <td>{{#ifeq payment_method 1}}
                                             <p>CASH </p>
@@ -50,6 +51,9 @@
                                         </td>
                                         
                                         <td>₹{{this.subtotal}}</td>
+                                        {{!-- {{#each product}} --}}
+                                        <td>{{this.quantity}}</td>
+                                        {{!-- {{/each}} --}}
                                     </tr>
 
 
