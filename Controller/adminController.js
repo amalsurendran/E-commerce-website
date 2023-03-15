@@ -19,7 +19,7 @@ const loadLogin = async (req, res, next) => {
             })
         }
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const loadHome = async (req, res, next) => {
@@ -37,7 +37,7 @@ const loadHome = async (req, res, next) => {
             checkAdmin
         })
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const AdminverifyLogin = async (req, res, next) => {
@@ -68,7 +68,7 @@ const AdminverifyLogin = async (req, res, next) => {
             });
         }
     } catch (error) {
-        console.log(error)
+       next(error)
     }
 }
 const loadsignup = async (req, res, next) => {
@@ -77,7 +77,7 @@ const loadsignup = async (req, res, next) => {
             adminlog: false
         })
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const signupAdmin = async (req, res, next) => {
@@ -111,7 +111,7 @@ const signupAdmin = async (req, res, next) => {
             });
         }
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const loaduser = async (req, res, next) => {
@@ -122,7 +122,7 @@ const loaduser = async (req, res, next) => {
             users: userData
         })
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const loadLogout = async (req, res, next) => {
@@ -130,7 +130,7 @@ const loadLogout = async (req, res, next) => {
         req.session.destroy();
         res.redirect('/admin');
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const blockUser = async (req, res, next) => {
@@ -145,10 +145,10 @@ const blockUser = async (req, res, next) => {
         });
         res.redirect('/admin/users');
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
-const unBlockUser = async (req, res) => {
+const unBlockUser = async (req, res,next) => {
     try {
         const id = req.query.id
         const userData = await user.findOneAndUpdate({
@@ -160,10 +160,10 @@ const unBlockUser = async (req, res) => {
         });
         res.redirect('/admin/users');
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 }
-const loadOrder = async (req, res) => {
+const loadOrder = async (req, res,next) => {
     try {
         const orderData = await Order.find({}).sort({
             _id: -1
@@ -173,7 +173,7 @@ const loadOrder = async (req, res) => {
             adminlog: 1
         });
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 };
 const dashboardData = async (req, res, next) => {
@@ -286,7 +286,7 @@ const dashboardData = async (req, res, next) => {
         next(error)
     }
 }
-const loadcoupons = async (req, res) => {
+const loadcoupons = async (req, res,next) => {
     try {
         const couponData = await Coupon.find()
 
@@ -295,20 +295,20 @@ const loadcoupons = async (req, res) => {
             coupon: couponData
         })
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 //add new coupon
-const addCoupon = async (req, res) => {
+const addCoupon = async (req, res,next) => {
     try {
         res.render('add-coupon', {
             adminlog: true
         })
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
-const insertcoupon = async (req, res) => {
+const insertcoupon = async (req, res,next) => {
     try {
         const coupon = new Coupon({
             code: req.body.code,
@@ -324,10 +324,10 @@ const insertcoupon = async (req, res) => {
         }
 
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
-const deleteimage = async (req, res) => {
+const deleteimage = async (req, res ,next) => {
     try {
         const {
             img,
@@ -347,10 +347,10 @@ const deleteimage = async (req, res) => {
         }
 
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
-const salesReport = async (req, res) => {
+const salesReport = async (req, res,next) => {
     try {
         const orderdata = await Order.aggregate([{
                 $match: {
@@ -387,7 +387,7 @@ const salesReport = async (req, res) => {
         });
 
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 
@@ -413,13 +413,13 @@ const salesReport = async (req, res) => {
 //                     }]
 //             });
 
-//         console.log(reqDate, toDate);
-//         console.log(orderdataFilter);
+//         next(reqDate, toDate);
+//         next(orderdataFilter);
 
 //         filter = true;
 //         res.redirect('/admin/sales-report');
 //     } catch (error) {
-//         console.log(error);
+//         next(error);
 //     }
 // }
 

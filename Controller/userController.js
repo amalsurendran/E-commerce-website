@@ -31,7 +31,7 @@ const otpsending = async function sendotp(mobile) {
             // here you can implement your fallback code
             .catch(error => console.log(error))
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const loadhome = async (req, res, next) => {  
@@ -66,7 +66,7 @@ const loginLoad = async (req, res, next) => {
             login: false
         })
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const loadsignup = async (req, res, next) => {
@@ -75,7 +75,7 @@ const loadsignup = async (req, res, next) => {
             login: false
         })
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const insertUser = async (req, res, next) => {
@@ -136,7 +136,7 @@ const loadverify = async (req, res, next) => {
             logged: true
         })     
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const otpverify = async (req, res, next) => { 
@@ -164,7 +164,7 @@ const otpverify = async (req, res, next) => {
         }
     } catch (error) {
 
-        console.log(error);
+        next(error);
     }
 }
 const verifyLogin = async (req, res, next) => {
@@ -208,7 +208,7 @@ const verifyLogin = async (req, res, next) => {
             })
         }
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 }
 const otpredsend = async (req, res, next) => {
@@ -218,7 +218,7 @@ const otpredsend = async (req, res, next) => {
         })
     } catch (error) {
 
-        console.log(error);
+        next(error);
     }
 }
 const loadresend = async (req, res, next) => {
@@ -263,7 +263,7 @@ const
                 mobile: mobile,           
             })
         } catch (error) {
-            console.log(error);
+            next(error);
             res.render('verify', {
                 login: 0,
                 message: "Can't sent OTP",
@@ -279,7 +279,7 @@ const loadSend = async (req, res, next) => {
             login: false
         })
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const productview = async (req, res, next) => {
@@ -305,7 +305,7 @@ const productview = async (req, res, next) => {
             });
         }
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 }
 const userLogout = async (req, res) => {
@@ -314,7 +314,7 @@ const userLogout = async (req, res) => {
         req.session.destroy()
         res.redirect('/');
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const LoadUserprofile = async (req, res, next) => {
@@ -329,7 +329,7 @@ const LoadUserprofile = async (req, res, next) => {
         })
         
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const loadAddress = async (req, res, next) => {
@@ -339,7 +339,7 @@ const loadAddress = async (req, res, next) => {
             logged: 1
         })
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const loadPasswordchange = async (req, res, next) => {
@@ -370,7 +370,7 @@ const changePassword = async (req, res, next) => {
             res.redirect('/userprofile')
         }
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const updateProfile = async (req, res) => {
@@ -386,7 +386,7 @@ const updateProfile = async (req, res) => {
         })
         res.redirect('/user-profile');
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const addAddress = async (req, res) => {
@@ -400,7 +400,7 @@ const addAddress = async (req, res) => {
         });
         res.redirect('/userprofile');
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const deleteAddress = async (req, res) => {
@@ -417,7 +417,7 @@ const deleteAddress = async (req, res) => {
         });
         res.redirect('/user-profile');
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const loadforgetpassword = async (req, res) => {
@@ -425,14 +425,14 @@ const loadforgetpassword = async (req, res) => {
 
         res.render('forgetpassword')
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const load404 = async (req, res) => {
     try {
         res.render('404')
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const loadReset =async(req,res)=>{
@@ -477,7 +477,7 @@ const loadReset =async(req,res)=>{
             email: userdata.email
         })
     } catch (error) {
-        console.log(error);
+        next(error);
         res.render('forgetVerify', {
             login: false,
             message: "Can't sent OTP",
@@ -518,7 +518,7 @@ const forgetotp = async (req, res, next) => {
         }
     } catch (error) {
 
-        console.log(error);
+        next(error);
     }
 }
 const  resetPassword = async (req, res) => {
@@ -533,7 +533,7 @@ const  resetPassword = async (req, res) => {
             res.render('resetpassword', { loggedout: 1, message: "password doesn't match" })
         }
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const searchedData = async (req, res) => {
@@ -546,7 +546,7 @@ const searchedData = async (req, res) => {
             res.render('searched', { products: data, login: 1, length });
         }
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 

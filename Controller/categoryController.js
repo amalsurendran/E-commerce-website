@@ -12,7 +12,7 @@ const loadCategory = async (req, res, next) => {
             adminlog: 1
         })
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const loadAddcategory = async (req, res, next) => {
@@ -22,7 +22,7 @@ const loadAddcategory = async (req, res, next) => {
             adminlog: 1
         })
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const insertCategory = async (req, res, next) => {
@@ -30,7 +30,6 @@ const insertCategory = async (req, res, next) => {
         const categoryata = await Category.find({name:req.body.name})
         if (categoryata) {       
             res.render('add-category', {
-                // category:categoryata,
                 adminlog: 1,
                 error: "Category already exist"
             })
@@ -42,7 +41,7 @@ const insertCategory = async (req, res, next) => {
             res.redirect('/admin/category');
         }
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const editCategory = async (req, res, next) => {
@@ -56,7 +55,7 @@ const editCategory = async (req, res, next) => {
             adminlog: true
         });
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const updateCategory = async (req, res, next) => {
@@ -82,7 +81,7 @@ const updateCategory = async (req, res, next) => {
             res.redirect('/admin/category');
         }
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const deleteCategory = async (req, res, next) => {
@@ -95,10 +94,10 @@ const deleteCategory = async (req, res, next) => {
         });
         res.redirect('/admin/category');
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 }
-const loadshopcategory = async(req,res)=>{
+const loadshopcategory = async(req,res,next)=>{
     try {
         const productData = await product.find({
             soft_delete: false
@@ -106,7 +105,7 @@ const loadshopcategory = async(req,res)=>{
         const categoryData = await Category.find({})
         res.render('shopcategory',{category:categoryData,logged:1,product:productData})
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 

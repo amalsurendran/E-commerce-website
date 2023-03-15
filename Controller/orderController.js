@@ -8,7 +8,7 @@ const {
 const moment = require('moment')
 
 
-const loadOrder = async (req, res) => {
+const loadOrder = async (req, res,next) => {
     try {
         const orderData = await Order.find({
             userId: req.session.user_id
@@ -20,10 +20,10 @@ const loadOrder = async (req, res) => {
             loggedd: 1
         })
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 }
-const loadsingleorder = async (req, res) => {
+const loadsingleorder = async (req, res,next) => {
     try {
         const orderData = await Order.find({
             orderId: req.query.id
@@ -33,10 +33,10 @@ const loadsingleorder = async (req, res) => {
             logged: 1
         }) //pwer:pID
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
-const cancelOrder = async (req, res) => {
+const cancelOrder = async (req, res,next) => {
     try {
         const id = req.query.id;
         const orderData = await Order.findById({
@@ -84,10 +84,10 @@ const cancelOrder = async (req, res) => {
         }
         res.redirect('/order');
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
-const viewShopProducts = async (req, res) => {
+const viewShopProducts = async (req, res,next) => {
     try {
         const productData = await product.find({
             category: req.query.categoryid,
@@ -98,10 +98,10 @@ const viewShopProducts = async (req, res) => {
             logged: 1
         })
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
-const loadviewproduct = async (req, res) => {
+const loadviewproduct = async (req, res,next) => {
     try {
         const orderData = await Order.find({
             _id: ObjectId(req.query.id)
@@ -111,11 +111,11 @@ const loadviewproduct = async (req, res) => {
             order: orderData
         });
     } catch (error) {
-        console.log(error.message);
+        next(error.message);
     }
 }
 // admin order
-const changestatus = async (req, res) => {
+const changestatus = async (req, res,next) => {
     try {
         const id = req.query.id;
         const orderData = await Order.findOne({
@@ -148,7 +148,7 @@ const changestatus = async (req, res) => {
         }
         res.redirect('/admin/orders');
     } catch (error) {
-        console.log(error.message)
+        next(error.message)
     }
 }
 const successorder = async (req, res, next) => {
@@ -209,7 +209,7 @@ const coupon = async (req, res, next) => {
         next(error);
     }
 }
-const loadWishlist = async (req, res) => {
+const loadWishlist = async (req, res,next) => {
     try {
         const wishlistData = await user.aggregate([{
                 $match: {
@@ -233,10 +233,10 @@ const loadWishlist = async (req, res) => {
             logged: 1
         });
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
-const addToWishlist = async (req, res) => {
+const addToWishlist = async (req, res,next) => {
     try {
         const id = req.query.id;
         const wishlistData = await user.updateOne({
@@ -250,10 +250,10 @@ const addToWishlist = async (req, res) => {
         });
         res.redirect('/home');
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
-const removeWishlistProduct = async (req, res) => {
+const removeWishlistProduct = async (req, res,next) => {
     try {
         const result = await user.findByIdAndUpdate({
             _id: req.session.user_id
@@ -266,10 +266,10 @@ const removeWishlistProduct = async (req, res) => {
         });
         res.json("success")
     } catch (error) {
-        console.log(error.message)
+        next(error)
     }
 }
-const wishlistToCart = async (req, res) => {
+const wishlistToCart = async (req, res,next) => {
     try {
         const result = await user.updateOne({
             _id: req.session.user_id
@@ -293,7 +293,7 @@ const wishlistToCart = async (req, res) => {
         }
         res.redirect('/wishlist')
     } catch (error) {
-        console.log(error.message)
+        next(error)
     }
 }
 

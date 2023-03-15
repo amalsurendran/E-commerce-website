@@ -10,7 +10,7 @@ const product = require('../Models/productModel');
 const razorpay = require('razorpay')
 const moment = require('moment')
 const Coupon = require('../Models/couponModel')
-const loadCart = async (req, res) => {
+const loadCart = async (req, res,next) => {
 
     try {
         const cartData = await user.aggregate([{
@@ -56,10 +56,10 @@ const loadCart = async (req, res) => {
             length
         });
     } catch (error) {
-        console.log(error);
+        next(error)
     }
 }
-const addToCart = async (req, res) => {
+const addToCart = async (req, res,next) => {
     try {
         const cartData = await user.updateOne({
             _id: req.session.user_id
@@ -72,10 +72,10 @@ const addToCart = async (req, res) => {
         });
         res.redirect('/home');
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
-const removeCartProduct = async (req, res) => {
+const removeCartProduct = async (req, res,next) => {
     try {
         const result = await user.findByIdAndUpdate({
             _id: req.session.user_id
@@ -88,7 +88,7 @@ const removeCartProduct = async (req, res) => {
         });
         res.json("success")
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const loadcart = async (req, res) => {
@@ -97,11 +97,11 @@ const loadcart = async (req, res) => {
             checknav: 1
         });
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 let total
-const checkOut = async (req, res) => {
+const checkOut = async (req, res,next) => {
     try {
         const address = await user.find({
             _id: req.session.user_id
@@ -144,11 +144,11 @@ const checkOut = async (req, res) => {
             offer: 0
         });
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 
 }
-const checkoutAddress = async (req, res) => {
+const checkoutAddress = async (req, res,next) => {
     try {
         const address = await user.findByIdAndUpdate({
             _id: req.session.user_id
@@ -159,12 +159,12 @@ const checkoutAddress = async (req, res) => {
         });
         res.redirect('/cart');
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 let couponCode
 let couponamount
-const placeOrder = async (req, res) => {
+const placeOrder = async (req, res,next) => {
     try {
         const {
             productid,

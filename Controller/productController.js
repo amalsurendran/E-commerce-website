@@ -36,7 +36,7 @@ const productAdd = async (req, res, next) => {
             category: categoryData
         });
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const productinsert = async (req, res, next) => {
@@ -71,7 +71,7 @@ const productinsert = async (req, res, next) => {
             message: "something wrong"
         })
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const updateProduct = async (req, res, next) => {
@@ -112,7 +112,7 @@ const updateProduct = async (req, res, next) => {
         }
         res.redirect('/admin/product');
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 const loadEditproduct = async (req, res, next) => {
@@ -130,7 +130,7 @@ const loadEditproduct = async (req, res, next) => {
             res.redirect('/admin/product')
         }
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 }
 const deleteProduct = async (req, res, next) => {
@@ -143,7 +143,7 @@ const deleteProduct = async (req, res, next) => {
         });
         res.redirect('/admin/product');
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 }
 module.exports = {
