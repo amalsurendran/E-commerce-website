@@ -353,6 +353,7 @@ const deleteimage = async (req, res ,next) => {
 }
 const salesReport = async (req, res,next) => {
     try {
+        let orderdataFilter 
         const orderdata = await Order.aggregate([{
                 $match: {
                     status: "Delivered"
@@ -376,7 +377,7 @@ const salesReport = async (req, res,next) => {
         ]);
 
         if (!filter) {
-         const orderdataFilter = await Order.find({
+          orderdataFilter  = await Order.find({
                 status: "Delivered"
             })
         }
@@ -385,7 +386,7 @@ const salesReport = async (req, res,next) => {
         const totalSales = orderdata.length > 0 ? orderdata[0].totalSales : 0;
         res.render('sales', {
             adminlog: 1,
-            orderdata: orderdataFilter,
+            orderdata:orderdataFilter,
             totalSales: totalSales,
             orderdate:date,
             product:products

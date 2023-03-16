@@ -7,8 +7,17 @@ const bannerSchema = new mongoose.Schema({
         required:true
     },
     image:{
-        type:String,
+        type:Array,
         required:true
+        
+    },
+    status:{
+        type:Boolean,
+        default:false
+    },
+    default:{
+        type:Boolean,
+        default:false
     }
 });
 

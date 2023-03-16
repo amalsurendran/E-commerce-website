@@ -17,9 +17,12 @@ const loadaddBanner = async (req, res,next) => {
 }
 const insertBanner = async (req, res,next) => {
     try {
+        const images = req.files.map((file) => {
+            return file.filename
+        })
         const Banner = new banner({
             name: req.body.name,
-            image: req.file.filename
+            image:images
         });
 
         const bannerData = await Banner.save();

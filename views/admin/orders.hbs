@@ -16,7 +16,7 @@
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col">Order id</th>
-                                                                <th scope="col">Products</th>
+                                                                <th scope="col">Details</th>
                                                                 <th scope="col">Date</th>
 
                                                                 <th scope="col">Payment Method</th>
@@ -40,11 +40,11 @@
 
                                                                 <td>
                                                                     {{#ifeq this.payment_method 1}}
-                                                                    <p class="text-success">COD</p>
+                                                                    <p class="text-white">COD</p>
                                                                     {{/ifeq}}
 
                                                                     {{#ifeq this.payment_method 2}}
-                                                                    <hp class="text-success">RAZORPAY</p>
+                                                                    <hp class="text-white">RAZORPAY</p>
                                                                     {{/ifeq}}
                                                                 </td>
                                                                 <td><strong>{{status}}</strong></td>

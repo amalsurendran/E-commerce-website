@@ -25,6 +25,7 @@
                                                                 <th scope="col">Name</th>
                                                                 <th scope="col">Image</th>
                                                                 <th scope="col">Action</th>
+                                                                <th>Status</th>
 
                                                             </tr>
                                                         </thead>
@@ -32,7 +33,7 @@
                                                             {{#each banner}}
                                                             <tr>
                                                                 <td>{{this.name}}</td>
-                                                                <td><img src="/categoryImages/{{this.image}}" alt="..."
+                                                                <td><img src="/categoryImages/{{this.image.[0]}}" alt="..."
                                                                         class="img-fluid"></td>
                                                                 <td>
                                                                     <a href="/admin/edit-banner?id={{this._id}}"
@@ -42,6 +43,7 @@
                                                                         data-bs-toggle="modal"
                                                                         data-bs-target="#exampleModal{{@index}}" style="border-radius:5px;  background-color:#51c2d9; border-radius: 5px;  color: #fff;">Delete</a>
                                                                 </td>
+                                                                <td><button> <a href="/admin/active-banner?id={{this._id}}"></a> Active</button></td>
                                                             </tr>
                                                             <div class="modal fade" id="exampleModal{{@index}}"
                                                                 tabindex="-1" aria-labelledby="exampleModalLabel"
